@@ -1,0 +1,23 @@
+{
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDesk/ContentView.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/x86_64/ContentView.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/x86_64/ContentView.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/x86_64/ContentView.dia",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/x86_64/ContentView.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/x86_64/ContentView.swiftdeps"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDesk/ViewModels/CheckOutViewModel.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/x86_64/CheckOutViewModel.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/x86_64/CheckOutViewModel.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/x86_64/CheckOutViewModel.dia",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/x86_64/CheckOutViewModel.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/x86_64/CheckOutViewModel.swiftdeps"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDesk/Views/CheckOut/CheckOutView.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/x86_64/CheckOutView.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/x86_64/CheckOutView.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/x86_64/CheckOutView.dia",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/x86_64/CheckOutView.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/x86_64/CheckOutView.swiftdeps"
+  }
+}

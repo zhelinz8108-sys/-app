@@ -1,0 +1,65 @@
+{
+  "buildCommand" : {
+    "command" : "build",
+    "skipDependencies" : false,
+    "style" : "buildOnly"
+  },
+  "configuredTargets" : [
+    {
+      "guid" : "d1cc711fe7c9cd362256877a53d40c795e82de7d4b3c4a2ef2a84cd81a4601db"
+    }
+  ],
+  "containerPath" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDesk.xcodeproj",
+  "continueBuildingAfterErrors" : false,
+  "dependencyScope" : "workspace",
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "activeArchitecture" : "undefined_arch",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : true,
+      "platform" : "iphonesimulator",
+      "sdk" : "iphonesimulator26.2",
+      "sdkVariant" : "iphonesimulator",
+      "supportedArchitectures" : [
+        "i386",
+        "x86_64"
+      ],
+      "targetArchitecture" : "undefined_arch"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex",
+      "buildProductsPath" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Products",
+      "derivedDataPath" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData",
+      "indexDataStoreFolderPath" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Index.noindex/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Index.noindex/PrecompiledHeaders",
+      "pchPath" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/PrecompiledHeaders"
+    },
+    "configurationName" : "Debug",
+    "overrides" : {
+      "commandLine" : {
+        "table" : {
+          "CODE_SIGNING_ALLOWED" : "NO"
+        }
+      },
+      "synthesized" : {
+        "table" : {
+          "ACTION" : "build",
+          "CLANG_COVERAGE_MAPPING" : "YES",
+          "CLANG_PROFILE_DATA_DIRECTORY" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/ProfileData",
+          "ENABLE_PREVIEWS" : "NO",
+          "ENABLE_XOJIT_PREVIEWS" : "YES",
+          "ONLY_ACTIVE_ARCH" : "YES"
+        }
+      }
+    }
+  },
+  "schemeCommand" : "launch",
+  "showNonLoggedProgress" : true,
+  "useDryRun" : false,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}

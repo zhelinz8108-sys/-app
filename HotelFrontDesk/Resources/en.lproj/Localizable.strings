@@ -1,0 +1,134 @@
+/* Tabs */
+"tab.overview" = "Overview";
+"tab.rooms" = "Rooms";
+"tab.analytics" = "Analytics";
+"tab.logs" = "Logs";
+"tab.settings" = "Settings";
+
+/* Room Status */
+"room.vacant" = "Vacant";
+"room.reserved" = "Reserved";
+"room.occupied" = "Occupied";
+"room.cleaning" = "Dirty";
+"room.maintenance" = "Maintenance";
+
+/* Room Type */
+"room.king" = "King";
+"room.twin" = "Twin";
+"room.suite" = "Suite";
+
+/* Dashboard */
+"dashboard.title" = "Front Desk";
+"dashboard.totalRooms" = "Total";
+"dashboard.occupied" = "Occupied";
+"dashboard.vacant" = "Vacant";
+"dashboard.reserved" = "Reserved";
+"dashboard.occupancyRate" = "Occupancy";
+"dashboard.todayCheckIn" = "Check-ins";
+"dashboard.todayCheckOut" = "Check-outs";
+"dashboard.quickActions" = "Quick Actions";
+"dashboard.checkIn" = "Check In";
+"dashboard.checkOut" = "Check Out";
+
+/* Check-in */
+"checkin.title" = "Check In";
+"checkin.guestInfo" = "Guest Info";
+"checkin.name" = "Name";
+"checkin.idType" = "ID Type";
+"checkin.idNumber" = "ID Number";
+"checkin.phone" = "Phone";
+"checkin.guestCount" = "Guests";
+"checkin.roomType" = "Room Type";
+"checkin.hourly" = "Hourly";
+"checkin.fullDay" = "Overnight";
+"checkin.selectRoom" = "Select Room";
+"checkin.checkInDate" = "Check-in Date";
+"checkin.checkOutDate" = "Check-out Date";
+"checkin.deposit" = "Deposit";
+"checkin.paymentMethod" = "Payment Method";
+"checkin.confirm" = "Confirm Check-in";
+"checkin.cancel" = "Cancel";
+"checkin.scanID" = "Scan ID Card";
+
+/* Check-out */
+"checkout.title" = "Check Out";
+"checkout.refund" = "Refund Deposit";
+"checkout.refundAmount" = "Refund Amount";
+"checkout.refundMethod" = "Refund Method";
+"checkout.confirm" = "Confirm Check-out";
+"checkout.fullRefund" = "Full Refund";
+"checkout.depositCollected" = "Collected";
+"checkout.depositRefunded" = "Refunded";
+"checkout.depositBalance" = "Balance";
+
+/* Payment Methods */
+"payment.cash" = "Cash";
+"payment.wechat" = "WeChat";
+"payment.alipay" = "Alipay";
+"payment.bankCard" = "Bank Card";
+"payment.pos" = "POS";
+"payment.transfer" = "Transfer";
+
+/* Settings */
+"settings.title" = "Room Setup";
+"settings.account" = "Account";
+"settings.logout" = "Log Out";
+"settings.staffManage" = "Staff Management";
+"settings.specialPrice" = "Special Date Pricing";
+"settings.addRoom" = "Add Room";
+"settings.editRoom" = "Edit Room";
+"settings.testData" = "Generate Test Data";
+"settings.resetAll" = "Reset All Rooms";
+
+/* Analytics */
+"analytics.title" = "Analytics";
+"analytics.monthlyRevenue" = "Revenue";
+"analytics.occupancyRate" = "Occupancy";
+"analytics.adr" = "ADR";
+"analytics.totalNights" = "Room Nights";
+"analytics.profitAnalysis" = "Profit Analysis";
+"analytics.revenue" = "Revenue";
+"analytics.cost" = "Cost";
+"analytics.profit" = "Profit";
+"analytics.profitMargin" = "Margin";
+
+/* Night Audit */
+"audit.title" = "Night Audit";
+"audit.run" = "Run Audit";
+"audit.summary" = "Daily Summary";
+"audit.overdue" = "Overdue Checkouts";
+"audit.extendRequests" = "Extension Requests";
+"audit.approve" = "Approve";
+"audit.reject" = "Reject";
+"audit.requestExtend" = "Request Extension";
+
+/* Reports */
+"report.title" = "Export Reports";
+"report.monthly" = "Monthly Report";
+"report.finance" = "Financial Report";
+"report.guest" = "Guest Report";
+"report.daily" = "Daily Report";
+
+/* Network */
+"network.localMode" = "Local Mode — iCloud unavailable, data stored on this device only";
+"network.retrying" = "Retrying";
+
+/* Login */
+"login.title" = "Staff Login";
+"login.username" = "Username";
+"login.password" = "Password";
+"login.submit" = "Log In";
+"login.error" = "Invalid username or password";
+"login.defaultHint" = "Default admin: admin / 8888";
+
+/* Common */
+"common.confirm" = "Confirm";
+"common.cancel" = "Cancel";
+"common.save" = "Save";
+"common.delete" = "Delete";
+"common.edit" = "Edit";
+"common.add" = "Add";
+"common.search" = "Search";
+"common.noData" = "No Data";
+"common.loading" = "Loading...";
+"common.refresh" = "Refresh";

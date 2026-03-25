@@ -1,0 +1,134 @@
+/* Tabs */
+"tab.overview" = "概览";
+"tab.rooms" = "房态";
+"tab.analytics" = "数据";
+"tab.logs" = "日志";
+"tab.settings" = "设置";
+
+/* Room Status */
+"room.vacant" = "空房";
+"room.reserved" = "已预订";
+"room.occupied" = "已住";
+"room.cleaning" = "脏房";
+"room.maintenance" = "维修中";
+
+/* Room Type */
+"room.king" = "大床房";
+"room.twin" = "双床房";
+"room.suite" = "套房";
+
+/* Dashboard */
+"dashboard.title" = "酒店前台";
+"dashboard.totalRooms" = "总房数";
+"dashboard.occupied" = "已住";
+"dashboard.vacant" = "空房";
+"dashboard.reserved" = "已预订";
+"dashboard.occupancyRate" = "入住率";
+"dashboard.todayCheckIn" = "今日入住";
+"dashboard.todayCheckOut" = "今日退房";
+"dashboard.quickActions" = "快捷操作";
+"dashboard.checkIn" = "办理入住";
+"dashboard.checkOut" = "办理退房";
+
+/* Check-in */
+"checkin.title" = "办理入住";
+"checkin.guestInfo" = "客人信息";
+"checkin.name" = "姓名";
+"checkin.idType" = "证件类型";
+"checkin.idNumber" = "证件号码";
+"checkin.phone" = "手机号";
+"checkin.guestCount" = "入住人数";
+"checkin.roomType" = "入住类型";
+"checkin.hourly" = "钟点房";
+"checkin.fullDay" = "全日房";
+"checkin.selectRoom" = "选择房间";
+"checkin.checkInDate" = "入住日期";
+"checkin.checkOutDate" = "预计退房";
+"checkin.deposit" = "押金";
+"checkin.paymentMethod" = "支付方式";
+"checkin.confirm" = "确认入住";
+"checkin.cancel" = "取消";
+"checkin.scanID" = "扫描身份证";
+
+/* Check-out */
+"checkout.title" = "办理退房";
+"checkout.refund" = "退押金";
+"checkout.refundAmount" = "退款金额";
+"checkout.refundMethod" = "退款方式";
+"checkout.confirm" = "确认退房";
+"checkout.fullRefund" = "全额退";
+"checkout.depositCollected" = "已收押金";
+"checkout.depositRefunded" = "已退";
+"checkout.depositBalance" = "待退余额";
+
+/* Payment Methods */
+"payment.cash" = "现金";
+"payment.wechat" = "微信";
+"payment.alipay" = "支付宝";
+"payment.bankCard" = "银行卡";
+"payment.pos" = "POS机";
+"payment.transfer" = "转账";
+
+/* Settings */
+"settings.title" = "房间管理";
+"settings.account" = "账号";
+"settings.logout" = "退出登录";
+"settings.staffManage" = "员工管理";
+"settings.specialPrice" = "特殊日期定价";
+"settings.addRoom" = "添加房间";
+"settings.editRoom" = "编辑房间";
+"settings.testData" = "一键生成测试数据";
+"settings.resetAll" = "清除所有房间（重置）";
+
+/* Analytics */
+"analytics.title" = "数据分析";
+"analytics.monthlyRevenue" = "月收入";
+"analytics.occupancyRate" = "入住率";
+"analytics.adr" = "平均房价(ADR)";
+"analytics.totalNights" = "总间夜";
+"analytics.profitAnalysis" = "盈亏分析";
+"analytics.revenue" = "月收入";
+"analytics.cost" = "月成本";
+"analytics.profit" = "月利润";
+"analytics.profitMargin" = "利润率";
+
+/* Night Audit */
+"audit.title" = "夜审";
+"audit.run" = "执行夜审";
+"audit.summary" = "日结汇总";
+"audit.overdue" = "超期未退房";
+"audit.extendRequests" = "延住申请";
+"audit.approve" = "批准";
+"audit.reject" = "驳回";
+"audit.requestExtend" = "申请延住";
+
+/* Reports */
+"report.title" = "报表导出";
+"report.monthly" = "月度经营报表";
+"report.finance" = "财务数据报表";
+"report.guest" = "客源分析报表";
+"report.daily" = "每日营收报表";
+
+/* Network */
+"network.localMode" = "本地模式 — iCloud 不可用，数据仅存储在本设备";
+"network.retrying" = "重试中";
+
+/* Login */
+"login.title" = "员工登录";
+"login.username" = "用户名";
+"login.password" = "密码";
+"login.submit" = "登 录";
+"login.error" = "用户名或密码错误";
+"login.defaultHint" = "默认管理员: admin / 8888";
+
+/* Common */
+"common.confirm" = "确定";
+"common.cancel" = "取消";
+"common.save" = "保存";
+"common.delete" = "删除";
+"common.edit" = "编辑";
+"common.add" = "添加";
+"common.search" = "搜索";
+"common.noData" = "暂无数据";
+"common.loading" = "加载中...";
+"common.refresh" = "刷新";

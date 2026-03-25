@@ -1,0 +1,7 @@
+.DS_Store
+*.xcuserstate
+xcuserdata/
+.xcresult-diagnostics/
+*.logarchive
+DerivedData/
+.DS_Store

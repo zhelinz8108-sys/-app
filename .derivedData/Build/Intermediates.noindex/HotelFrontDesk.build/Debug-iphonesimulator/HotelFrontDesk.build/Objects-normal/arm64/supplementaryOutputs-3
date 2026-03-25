@@ -1,0 +1,65 @@
+{
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDesk/ContentView.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/ContentView.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/ContentView.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/ContentView.dia",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/ContentView.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/ContentView.swiftdeps"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDesk/Models/DepositRecord.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/DepositRecord.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/DepositRecord.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/DepositRecord.dia",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/DepositRecord.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/DepositRecord.swiftdeps"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDesk/Services/CloudKitConfig.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/CloudKitConfig.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/CloudKitConfig.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/CloudKitConfig.dia",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/CloudKitConfig.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/CloudKitConfig.swiftdeps"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDesk/Services/CloudKitService.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/CloudKitService.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/CloudKitService.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/CloudKitService.dia",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/CloudKitService.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/CloudKitService.swiftdeps"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDesk/Utilities/Extensions/Color+Theme.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/Color+Theme.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/Color+Theme.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/Color+Theme.dia",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/Color+Theme.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/Color+Theme.swiftdeps"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDesk/Utilities/Extensions/Date+Helpers.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/Date+Helpers.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/Date+Helpers.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/Date+Helpers.dia",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/Date+Helpers.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/Date+Helpers.swiftdeps"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDesk/ViewModels/DashboardViewModel.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/DashboardViewModel.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/DashboardViewModel.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/DashboardViewModel.dia",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/DashboardViewModel.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/DashboardViewModel.swiftdeps"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDesk/Views/CheckOut/DepositRefundView.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/DepositRefundView.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/DepositRefundView.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/DepositRefundView.dia",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/DepositRefundView.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/DepositRefundView.swiftdeps"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDesk/Views/Dashboard/DashboardView.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/DashboardView.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/DashboardView.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/DashboardView.dia",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/DashboardView.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDesk.build/Objects-normal/arm64/DashboardView.swiftdeps"
+  }
+}

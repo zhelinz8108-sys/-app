@@ -1,0 +1,4 @@
+Target dependency graph (2 targets)
+Target 'HotelFrontDeskTests' in project 'HotelFrontDesk'
+➜ Explicit dependency on target 'HotelFrontDesk' in project 'HotelFrontDesk'
+Target 'HotelFrontDesk' in project 'HotelFrontDesk' (no dependencies)

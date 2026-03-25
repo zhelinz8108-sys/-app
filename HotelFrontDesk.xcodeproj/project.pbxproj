@@ -1,0 +1,902 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		02BC712077217C99BBE21ED0 /* CloudKitConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748DA03E40D1C2942DD16B1D /* CloudKitConfig.swift */; };
+		0B95C6B909B216ED298B96CF /* NightAuditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4ACC3FE7730DD23C86CA4AD /* NightAuditView.swift */; };
+		0C55C5A6E6FE20E80FBD1840 /* RoomModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C9B3FB498ABB21317025BE /* RoomModelTests.swift */; };
+		0F469E03D753FFDEA99CBC61 /* CloudKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421EE74B16DBAAD52ECC6616 /* CloudKitService.swift */; };
+		11A245695BCAF0E8682F304C /* RoomGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428E16B3B3B37167F0A51FCC /* RoomGridView.swift */; };
+		18A87E329B12351F96DA5E35 /* StaffService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDC83D8217934970F008634 /* StaffService.swift */; };
+		19C160B02E43EDFAE8B433CC /* Date+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9164A224A0D920AFBA04BA47 /* Date+Helpers.swift */; };
+		1C3B26374F2DE2590AD58FEC /* OperationLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0A05A963976A02E7400503 /* OperationLog.swift */; };
+		1A2B3C4D5E6F708192A3B4C5 /* StaffServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3C4D5E6F708192A3B4C5D6 /* StaffServiceTests.swift */; };
+		2033614E0661E581B0EF8435 /* LocalStorageServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE920C36B9BF0E708CC72E /* LocalStorageServiceTests.swift */; };
+		28A5F5017CFABF2BE54DDCE4 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F7150E1F35161433CCB999 /* DashboardViewModel.swift */; };
+		2C2D7E87C79C4B9CCF3A85C2 /* LocalStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B9E312E89CDC4E69F47D68 /* LocalStorageService.swift */; };
+		30025625FCFC5872C74209A5 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771777B4BF61CFE4DB1D8E43 /* Room.swift */; };
+		3176D1B1BD6AE88955FFED1D /* RoomCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D71AC2752F269E75F86BAE /* RoomCardView.swift */; };
+		376294F758158E2C442E76D1 /* DepositRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4D5C993D1799A959B85922 /* DepositRecord.swift */; };
+		3A0DCD16C10BD2ED10C4C7C8 /* CheckOutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024E622C1E7AC7353C4651CB /* CheckOutView.swift */; };
+		3BD4401E89AF148E6D380D24 /* StaffManageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D82341367CA44A1394DD87C /* StaffManageView.swift */; };
+		3C8CF7F3CB50A5C92FCB39A8 /* ReportGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B445D4B447DD2017AEBFDB0 /* ReportGenerator.swift */; };
+		3D55996E80A3891E80C5E2ED /* OccupiedRoomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89FDB8E045D77510110C7FF /* OccupiedRoomPickerView.swift */; };
+		3E49C80EDFDDA5A159C8CF0A /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1CE8B72E77CB339F028719 /* DashboardView.swift */; };
+		418654321DDF38674BFBD981 /* SecurityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0E59FA3B3562A5D995711F /* SecurityTests.swift */; };
+		43F581D0DC5DA8CAEA6CBCFE /* PreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27E638A33692DABD0B5986E /* PreviewData.swift */; };
+		4544A0D6960F4B6CC1438DE6 /* RoomListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BED5F0070D94002A7DA017D /* RoomListViewModel.swift */; };
+		483C4B13FF7BD03FE6E0E58E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6263726792ECE4CF06DD9DEF /* ContentView.swift */; };
+		48A8690681817824534B512D /* ErrorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17F14127691A3BCF4AF8C1D /* ErrorHelper.swift */; };
+		4EC7FD874931488BE90AAC52 /* IDCardScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A387E425BF26B990B0FB73CD /* IDCardScannerView.swift */; };
+		4FE8F27E08B495622DB82AC9 /* BackupSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBA78C4296D334BF8202454 /* BackupSettingsView.swift */; };
+		50D367555E366E305530BF49 /* TestDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F203E8D161D0D2D802461 /* TestDataGenerator.swift */; };
+		5175339BAE6E9E6326210021 /* ReceiptThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5476B778EE59FE86D20BA757 /* ReceiptThumbnailView.swift */; };
+		52C64F6A9CBB62942E2DFB77 /* AnalyticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D006801709F3AF0A4FDDBCA1 /* AnalyticsViewModel.swift */; };
+		58E892FBB11FA91896734BB1 /* EncryptionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF7CB81F56D7A359846072B /* EncryptionHelper.swift */; };
+		59F5993163C431BD815939FF /* CheckInValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBE552777D7110881C96721 /* CheckInValidationTests.swift */; };
+		5A6BCC5438AFE40F614402D2 /* RoomStatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DA8DA4FF0C4E3B598AD518 /* RoomStatusBadge.swift */; };
+		5BF2E8A6AAF5CFE7E347D517 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7017D2E2915CE8F77EFDCB34 /* AppSettings.swift */; };
+		5DD98A5ABC5C36A579E2BB4B /* LanguageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED8B77884CFF83A0D793D3C /* LanguageService.swift */; };
+		5F774E5799BE5548EB1594CE /* RoomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0A9FA9F8EA13EDBDD9CB5F /* RoomPickerView.swift */; };
+		662F57339A255FA6E0CF495C /* ReceiptImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA983A0EAD4D92E182BE87A8 /* ReceiptImageService.swift */; };
+		6748BC97E76E0A98F9F9A5C4 /* CheckOutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D5B4F746C4613FE8F6ED36B /* CheckOutViewModel.swift */; };
+		683B0BA72B79FF3BCB8ECFBF /* DataIntegrityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C470B7DE2D95628A4E1F22CC /* DataIntegrityTests.swift */; };
+		6B593E3BE75D8F8401503C70 /* Staff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BD0F3C5C855F55172661F2 /* Staff.swift */; };
+		6CEF5D58357C849D1E7BFD06 /* DateHelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C0AD1C43F52727F4D9534F /* DateHelpersTests.swift */; };
+		713562470C6FB97EAF2F66B0 /* RoomTransferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52836555C470E850822BC62F /* RoomTransferView.swift */; };
+		750A568372F202A3A9EC760B /* GuestFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E493319926ACC817A26CD433 /* GuestFormView.swift */; };
+		7F506A4654D60ED1581E7AD2 /* CheckInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E92FD25DB17D380035D878 /* CheckInViewModel.swift */; };
+		812B00BF27BCD274EBABD3F9 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98932D3726A1271FD0AAC17C /* KeychainHelper.swift */; };
+		83AB45724B244900604B23E8 /* HotelFrontDeskApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B77C724ADF50DD6057700E /* HotelFrontDeskApp.swift */; };
+		845549ACC2335AB8F8843B64 /* SpecialDatePrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD66019FB4BAB99D7ED54DDE /* SpecialDatePrice.swift */; };
+		8AB6C2DB9BB2D2ABFD589D9D /* Validators.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C3F0289A2CCD8F189F2218 /* Validators.swift */; };
+		8D4B725DF3FD2056B7461B59 /* CheckOutValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC2D4EDD8903126E2F78877 /* CheckOutValidationTests.swift */; };
+		99C981AEC9E4EF95604035DB /* StatCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76D4ED9E91DED65900FC5ED /* StatCard.swift */; };
+		9D78EDFBD74B0DCD147E7619 /* RoomDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B3110A9E26A9A3C023A18 /* RoomDetailView.swift */; };
+		9D8315965261C81D599B6CE1 /* DepositTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D708BF6452519EC92B740625 /* DepositTests.swift */; };
+		A2749825AA836A2D8058E16C /* AnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6E4CD9D2C6E2BA8A2176D2 /* AnalyticsView.swift */; };
+		A40BD2769B8E892B6A7B7540 /* RoomSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F022E59FD3F85172EE346514 /* RoomSetupView.swift */; };
+		AED35D71299211FF711B9181 /* OperationLogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F0DAEA344BBBF069731890 /* OperationLogService.swift */; };
+		B206FF6A71ABB736D9B49B64 /* WorkflowIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF3B78DDBE34BFBED980806 /* WorkflowIntegrationTests.swift */; };
+		B373FF28F89448ED7B9B431E /* SpecialDatePriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9006568017ECF8DAC0064B /* SpecialDatePriceView.swift */; };
+		B3F130FCA07913AD74E46D73 /* PricingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0059CEF727FFAE626B415030 /* PricingService.swift */; };
+		BC25C251782B03FC0A2E5B89 /* AnalyticsCalculationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248E4AB9D18B09C72BB33FC /* AnalyticsCalculationTests.swift */; };
+		C545FA793024BC43B8F18743 /* OTABookingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDEDAF69E9E59B2AE725E50 /* OTABookingListView.swift */; };
+		CA528F705CB128BD63C1DAB5 /* OverdueCheckoutMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA0CCBD95244DBB178AB043F /* OverdueCheckoutMonitor.swift */; };
+		CB587276B54D78B2E542F603 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22E6B144E8BC04F6D2795785 /* Assets.xcassets */; };
+		CC74FDDC0A241FC24F41E328 /* Reservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B111253AD2BF9CE103336BF2 /* Reservation.swift */; };
+		CC87B00C94D306738974F945 /* NightAuditService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B573D4632A25802090515989 /* NightAuditService.swift */; };
+		D0F8F17596E6C54FBFC4FF76 /* StorageStressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E549BAA2697C25EFF627CB1 /* StorageStressTests.swift */; };
+		D2CFDB5F43FE2CB468CA4549 /* BackupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBFD2A00696ACDB718D0702 /* BackupService.swift */; };
+		D47ED18392574A73431FBA36 /* StaffLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31670BEAD3E9DC1472E0D62F /* StaffLoginView.swift */; };
+		D51E83D0B6DF041029AD1907 /* OTABookingFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA8D37EDBEAFECC098048A8 /* OTABookingFormView.swift */; };
+		DAB9951A7CCB257CF49643B6 /* CheckInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C02940660BF02CB2DCCD0FA /* CheckInView.swift */; };
+		DC55B70FB2C8EBA164742740 /* ReceiptCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB56B80F499D3799054B0FC9 /* ReceiptCameraView.swift */; };
+		DCBA46F94806CE70ACA1D185 /* ReservationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13A72A92AE90BAC44B74629 /* ReservationTests.swift */; };
+		DDBAB94C20D7850B8745D195 /* OTABooking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F41E1B63175FE7C81FFA4CA /* OTABooking.swift */; };
+		DEE297B95AD00BE9F71594DC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B81C09B3A6C8887047F1B2C7 /* Localizable.strings */; };
+		E02F09B7D69122C2C468A016 /* OTABookingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59634BB9041B6E7D71ED718 /* OTABookingService.swift */; };
+		E232E3FA01746B954B2A9BEC /* EdgeCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA01ACFC222D010A789CC3C6 /* EdgeCaseTests.swift */; };
+		E9171F064E313311D2639E93 /* PricingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4116F0427EEA079EDE32C7 /* PricingTests.swift */; };
+		E9F6DD5B702E5F14A6C12939 /* RoomLockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4791BF04AEB25B4318842E /* RoomLockService.swift */; };
+		EB070FB12A81BBA4C67F2490 /* Guest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4518426257CBCEB5A2A621 /* Guest.swift */; };
+		ECFA5E63EACB5A24FE03785A /* ReportExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49AE12AD0AB73431578423B /* ReportExportView.swift */; };
+		EF8342CB0B27165F0893C866 /* RoomHistoryCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBD3A95715CDCAE1531AE17 /* RoomHistoryCalendarView.swift */; };
+		F383ECA3F9401C9C3E36FE66 /* Color+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26B096A63195735D15A9A56 /* Color+Theme.swift */; };
+		FA7939B959D42FBCF64E9228 /* OperationLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DF664E5768394B37DFEBE1 /* OperationLogView.swift */; };
+		FCBB9589C00EDC72046295E4 /* DepositRefundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7B18AA752049EEDD0F593E /* DepositRefundView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9AFEA0962B410FAD3C261FC4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2582B25ADA17BF65C531892 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8347464100A2BA4B7F3500BB;
+			remoteInfo = HotelFrontDesk;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0059CEF727FFAE626B415030 /* PricingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingService.swift; sourceTree = "<group>"; };
+		024E622C1E7AC7353C4651CB /* CheckOutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckOutView.swift; sourceTree = "<group>"; };
+		0C9B3110A9E26A9A3C023A18 /* RoomDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomDetailView.swift; sourceTree = "<group>"; };
+		0D0E59FA3B3562A5D995711F /* SecurityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityTests.swift; sourceTree = "<group>"; };
+		1EBD3A95715CDCAE1531AE17 /* RoomHistoryCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomHistoryCalendarView.swift; sourceTree = "<group>"; };
+		1FC16A80E2F8FD2DAE2B235F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		21B77C724ADF50DD6057700E /* HotelFrontDeskApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelFrontDeskApp.swift; sourceTree = "<group>"; };
+		22E6B144E8BC04F6D2795785 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2B3C4D5E6F708192A3B4C5D6 /* StaffServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffServiceTests.swift; sourceTree = "<group>"; };
+		2B4D5C993D1799A959B85922 /* DepositRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositRecord.swift; sourceTree = "<group>"; };
+		2CA8D37EDBEAFECC098048A8 /* OTABookingFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTABookingFormView.swift; sourceTree = "<group>"; };
+		31670BEAD3E9DC1472E0D62F /* StaffLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffLoginView.swift; sourceTree = "<group>"; };
+		36DF664E5768394B37DFEBE1 /* OperationLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationLogView.swift; sourceTree = "<group>"; };
+		3C4116F0427EEA079EDE32C7 /* PricingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingTests.swift; sourceTree = "<group>"; };
+		3EC2D4EDD8903126E2F78877 /* CheckOutValidationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckOutValidationTests.swift; sourceTree = "<group>"; };
+		421EE74B16DBAAD52ECC6616 /* CloudKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitService.swift; sourceTree = "<group>"; };
+		428E16B3B3B37167F0A51FCC /* RoomGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomGridView.swift; sourceTree = "<group>"; };
+		42DA8DA4FF0C4E3B598AD518 /* RoomStatusBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomStatusBadge.swift; sourceTree = "<group>"; };
+		4BED5F0070D94002A7DA017D /* RoomListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomListViewModel.swift; sourceTree = "<group>"; };
+		4E4518426257CBCEB5A2A621 /* Guest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Guest.swift; sourceTree = "<group>"; };
+		4E549BAA2697C25EFF627CB1 /* StorageStressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageStressTests.swift; sourceTree = "<group>"; };
+		50BE920C36B9BF0E708CC72E /* LocalStorageServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageServiceTests.swift; sourceTree = "<group>"; };
+		51B9E312E89CDC4E69F47D68 /* LocalStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageService.swift; sourceTree = "<group>"; };
+		522F203E8D161D0D2D802461 /* TestDataGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDataGenerator.swift; sourceTree = "<group>"; };
+		52836555C470E850822BC62F /* RoomTransferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomTransferView.swift; sourceTree = "<group>"; };
+		5476B778EE59FE86D20BA757 /* ReceiptThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptThumbnailView.swift; sourceTree = "<group>"; };
+		5A251C2A1FCD3C4024346A25 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		5B0A9FA9F8EA13EDBDD9CB5F /* RoomPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomPickerView.swift; sourceTree = "<group>"; };
+		5C1CE8B72E77CB339F028719 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		5ED8B77884CFF83A0D793D3C /* LanguageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageService.swift; sourceTree = "<group>"; };
+		6263726792ECE4CF06DD9DEF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		6B445D4B447DD2017AEBFDB0 /* ReportGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportGenerator.swift; sourceTree = "<group>"; };
+		6E55E94E70AEF455BBAC7746 /* HotelFrontDeskTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = HotelFrontDeskTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7017D2E2915CE8F77EFDCB34 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		748DA03E40D1C2942DD16B1D /* CloudKitConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitConfig.swift; sourceTree = "<group>"; };
+		76C0AD1C43F52727F4D9534F /* DateHelpersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelpersTests.swift; sourceTree = "<group>"; };
+		771777B4BF61CFE4DB1D8E43 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		77C9B3FB498ABB21317025BE /* RoomModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomModelTests.swift; sourceTree = "<group>"; };
+		7C02940660BF02CB2DCCD0FA /* CheckInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInView.swift; sourceTree = "<group>"; };
+		7D5B4F746C4613FE8F6ED36B /* CheckOutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckOutViewModel.swift; sourceTree = "<group>"; };
+		7D82341367CA44A1394DD87C /* StaffManageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffManageView.swift; sourceTree = "<group>"; };
+		81BD0F3C5C855F55172661F2 /* Staff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Staff.swift; sourceTree = "<group>"; };
+		8B0A05A963976A02E7400503 /* OperationLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationLog.swift; sourceTree = "<group>"; };
+		8B4791BF04AEB25B4318842E /* RoomLockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomLockService.swift; sourceTree = "<group>"; };
+		8B7B18AA752049EEDD0F593E /* DepositRefundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositRefundView.swift; sourceTree = "<group>"; };
+		8F41E1B63175FE7C81FFA4CA /* OTABooking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTABooking.swift; sourceTree = "<group>"; };
+		9164A224A0D920AFBA04BA47 /* Date+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Helpers.swift"; sourceTree = "<group>"; };
+		98932D3726A1271FD0AAC17C /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		9BBE552777D7110881C96721 /* CheckInValidationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInValidationTests.swift; sourceTree = "<group>"; };
+		A0E92FD25DB17D380035D878 /* CheckInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInViewModel.swift; sourceTree = "<group>"; };
+		A13A72A92AE90BAC44B74629 /* ReservationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationTests.swift; sourceTree = "<group>"; };
+		A1D71AC2752F269E75F86BAE /* RoomCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomCardView.swift; sourceTree = "<group>"; };
+		A26B096A63195735D15A9A56 /* Color+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Theme.swift"; sourceTree = "<group>"; };
+		A387E425BF26B990B0FB73CD /* IDCardScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDCardScannerView.swift; sourceTree = "<group>"; };
+		A49AE12AD0AB73431578423B /* ReportExportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportExportView.swift; sourceTree = "<group>"; };
+		A4F0DAEA344BBBF069731890 /* OperationLogService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationLogService.swift; sourceTree = "<group>"; };
+		ADBFD2A00696ACDB718D0702 /* BackupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupService.swift; sourceTree = "<group>"; };
+		ADF7CB81F56D7A359846072B /* EncryptionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptionHelper.swift; sourceTree = "<group>"; };
+		B111253AD2BF9CE103336BF2 /* Reservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reservation.swift; sourceTree = "<group>"; };
+		B27E638A33692DABD0B5986E /* PreviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewData.swift; sourceTree = "<group>"; };
+		B2A1BE163FA58BFDDD470CE7 /* HotelFrontDesk.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = HotelFrontDesk.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B573D4632A25802090515989 /* NightAuditService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightAuditService.swift; sourceTree = "<group>"; };
+		B59634BB9041B6E7D71ED718 /* OTABookingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTABookingService.swift; sourceTree = "<group>"; };
+		BA01ACFC222D010A789CC3C6 /* EdgeCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdgeCaseTests.swift; sourceTree = "<group>"; };
+		BB56B80F499D3799054B0FC9 /* ReceiptCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptCameraView.swift; sourceTree = "<group>"; };
+		BBDEDAF69E9E59B2AE725E50 /* OTABookingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTABookingListView.swift; sourceTree = "<group>"; };
+		C248E4AB9D18B09C72BB33FC /* AnalyticsCalculationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsCalculationTests.swift; sourceTree = "<group>"; };
+		C470B7DE2D95628A4E1F22CC /* DataIntegrityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataIntegrityTests.swift; sourceTree = "<group>"; };
+		C89FDB8E045D77510110C7FF /* OccupiedRoomPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OccupiedRoomPickerView.swift; sourceTree = "<group>"; };
+		CA0CCBD95244DBB178AB043F /* OverdueCheckoutMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverdueCheckoutMonitor.swift; sourceTree = "<group>"; };
+		CD66019FB4BAB99D7ED54DDE /* SpecialDatePrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialDatePrice.swift; sourceTree = "<group>"; };
+		CE6E4CD9D2C6E2BA8A2176D2 /* AnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsView.swift; sourceTree = "<group>"; };
+		D006801709F3AF0A4FDDBCA1 /* AnalyticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsViewModel.swift; sourceTree = "<group>"; };
+		D17F14127691A3BCF4AF8C1D /* ErrorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHelper.swift; sourceTree = "<group>"; };
+		D708BF6452519EC92B740625 /* DepositTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositTests.swift; sourceTree = "<group>"; };
+		D76D4ED9E91DED65900FC5ED /* StatCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatCard.swift; sourceTree = "<group>"; };
+		DCBA78C4296D334BF8202454 /* BackupSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupSettingsView.swift; sourceTree = "<group>"; };
+		DCDC83D8217934970F008634 /* StaffService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffService.swift; sourceTree = "<group>"; };
+		E493319926ACC817A26CD433 /* GuestFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestFormView.swift; sourceTree = "<group>"; };
+		E4ACC3FE7730DD23C86CA4AD /* NightAuditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightAuditView.swift; sourceTree = "<group>"; };
+		E9F7150E1F35161433CCB999 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
+		EA983A0EAD4D92E182BE87A8 /* ReceiptImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptImageService.swift; sourceTree = "<group>"; };
+		EAC31F3CF7597F29176C5FDD /* HotelFrontDesk.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HotelFrontDesk.entitlements; sourceTree = "<group>"; };
+		F022E59FD3F85172EE346514 /* RoomSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSetupView.swift; sourceTree = "<group>"; };
+		F4C3F0289A2CCD8F189F2218 /* Validators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validators.swift; sourceTree = "<group>"; };
+		FA9006568017ECF8DAC0064B /* SpecialDatePriceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialDatePriceView.swift; sourceTree = "<group>"; };
+		FFF3B78DDBE34BFBED980806 /* WorkflowIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowIntegrationTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		11DBD65969EDA7D36834EFC2 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				D17F14127691A3BCF4AF8C1D /* ErrorHelper.swift */,
+				F4C3F0289A2CCD8F189F2218 /* Validators.swift */,
+				3A464602649B99DDF39AA596 /* Extensions */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		1BD605BF2A8B5AA99C13675B /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				D006801709F3AF0A4FDDBCA1 /* AnalyticsViewModel.swift */,
+				A0E92FD25DB17D380035D878 /* CheckInViewModel.swift */,
+				7D5B4F746C4613FE8F6ED36B /* CheckOutViewModel.swift */,
+				E9F7150E1F35161433CCB999 /* DashboardViewModel.swift */,
+				4BED5F0070D94002A7DA017D /* RoomListViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		2022B3CB6D2D4BF271EF6D69 /* CheckIn */ = {
+			isa = PBXGroup;
+			children = (
+				7C02940660BF02CB2DCCD0FA /* CheckInView.swift */,
+				E493319926ACC817A26CD433 /* GuestFormView.swift */,
+				A387E425BF26B990B0FB73CD /* IDCardScannerView.swift */,
+				5B0A9FA9F8EA13EDBDD9CB5F /* RoomPickerView.swift */,
+			);
+			path = CheckIn;
+			sourceTree = "<group>";
+		};
+		2FD4C8DD0B8045779B7CEC0C /* CheckOut */ = {
+			isa = PBXGroup;
+			children = (
+				024E622C1E7AC7353C4651CB /* CheckOutView.swift */,
+				8B7B18AA752049EEDD0F593E /* DepositRefundView.swift */,
+				C89FDB8E045D77510110C7FF /* OccupiedRoomPickerView.swift */,
+			);
+			path = CheckOut;
+			sourceTree = "<group>";
+		};
+		38F770DEB55C267AE7BFDE42 /* Rooms */ = {
+			isa = PBXGroup;
+			children = (
+				A1D71AC2752F269E75F86BAE /* RoomCardView.swift */,
+				0C9B3110A9E26A9A3C023A18 /* RoomDetailView.swift */,
+				428E16B3B3B37167F0A51FCC /* RoomGridView.swift */,
+				1EBD3A95715CDCAE1531AE17 /* RoomHistoryCalendarView.swift */,
+				42DA8DA4FF0C4E3B598AD518 /* RoomStatusBadge.swift */,
+				52836555C470E850822BC62F /* RoomTransferView.swift */,
+			);
+			path = Rooms;
+			sourceTree = "<group>";
+		};
+		3A464602649B99DDF39AA596 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A26B096A63195735D15A9A56 /* Color+Theme.swift */,
+				9164A224A0D920AFBA04BA47 /* Date+Helpers.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		47996395FE9B604BE6F969F5 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				DCBA78C4296D334BF8202454 /* BackupSettingsView.swift */,
+				F022E59FD3F85172EE346514 /* RoomSetupView.swift */,
+				FA9006568017ECF8DAC0064B /* SpecialDatePriceView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		52144FB5AE4760BAA8D441DB /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				B27E638A33692DABD0B5986E /* PreviewData.swift */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		5656E7B26D4B52DDFF56B9FD /* Logs */ = {
+			isa = PBXGroup;
+			children = (
+				36DF664E5768394B37DFEBE1 /* OperationLogView.swift */,
+			);
+			path = Logs;
+			sourceTree = "<group>";
+		};
+		74E0DEAC0606E9B4ABFA13DD /* HotelFrontDeskTests */ = {
+			isa = PBXGroup;
+			children = (
+				C248E4AB9D18B09C72BB33FC /* AnalyticsCalculationTests.swift */,
+				9BBE552777D7110881C96721 /* CheckInValidationTests.swift */,
+				3EC2D4EDD8903126E2F78877 /* CheckOutValidationTests.swift */,
+				C470B7DE2D95628A4E1F22CC /* DataIntegrityTests.swift */,
+				76C0AD1C43F52727F4D9534F /* DateHelpersTests.swift */,
+				D708BF6452519EC92B740625 /* DepositTests.swift */,
+				BA01ACFC222D010A789CC3C6 /* EdgeCaseTests.swift */,
+				50BE920C36B9BF0E708CC72E /* LocalStorageServiceTests.swift */,
+				3C4116F0427EEA079EDE32C7 /* PricingTests.swift */,
+				A13A72A92AE90BAC44B74629 /* ReservationTests.swift */,
+				77C9B3FB498ABB21317025BE /* RoomModelTests.swift */,
+				0D0E59FA3B3562A5D995711F /* SecurityTests.swift */,
+				2B3C4D5E6F708192A3B4C5D6 /* StaffServiceTests.swift */,
+				4E549BAA2697C25EFF627CB1 /* StorageStressTests.swift */,
+				FFF3B78DDBE34BFBED980806 /* WorkflowIntegrationTests.swift */,
+			);
+			path = HotelFrontDeskTests;
+			sourceTree = "<group>";
+		};
+		7667AFFF0A6D766DBAAC284C /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				5C1CE8B72E77CB339F028719 /* DashboardView.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		8328585785ECC7118B830503 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7017D2E2915CE8F77EFDCB34 /* AppSettings.swift */,
+				2B4D5C993D1799A959B85922 /* DepositRecord.swift */,
+				4E4518426257CBCEB5A2A621 /* Guest.swift */,
+				8B0A05A963976A02E7400503 /* OperationLog.swift */,
+				8F41E1B63175FE7C81FFA4CA /* OTABooking.swift */,
+				B111253AD2BF9CE103336BF2 /* Reservation.swift */,
+				771777B4BF61CFE4DB1D8E43 /* Room.swift */,
+				CD66019FB4BAB99D7ED54DDE /* SpecialDatePrice.swift */,
+				81BD0F3C5C855F55172661F2 /* Staff.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		85D1B414460DBB01AF61E92D /* HotelFrontDesk */ = {
+			isa = PBXGroup;
+			children = (
+				22E6B144E8BC04F6D2795785 /* Assets.xcassets */,
+				6263726792ECE4CF06DD9DEF /* ContentView.swift */,
+				EAC31F3CF7597F29176C5FDD /* HotelFrontDesk.entitlements */,
+				21B77C724ADF50DD6057700E /* HotelFrontDeskApp.swift */,
+				8328585785ECC7118B830503 /* Models */,
+				52144FB5AE4760BAA8D441DB /* Preview Content */,
+				B682A48A4B75B89507E379AA /* Resources */,
+				CC81F568261D960AE2B8851B /* Services */,
+				11DBD65969EDA7D36834EFC2 /* Utilities */,
+				1BD605BF2A8B5AA99C13675B /* ViewModels */,
+				A1186A5D007275912DA6B2B4 /* Views */,
+			);
+			path = HotelFrontDesk;
+			sourceTree = "<group>";
+		};
+		92773A362BF24818B2580129 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				CE6E4CD9D2C6E2BA8A2176D2 /* AnalyticsView.swift */,
+				E4ACC3FE7730DD23C86CA4AD /* NightAuditView.swift */,
+				A49AE12AD0AB73431578423B /* ReportExportView.swift */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
+		A1166777631CF02DAEE2E52E /* Staff */ = {
+			isa = PBXGroup;
+			children = (
+				31670BEAD3E9DC1472E0D62F /* StaffLoginView.swift */,
+				7D82341367CA44A1394DD87C /* StaffManageView.swift */,
+			);
+			path = Staff;
+			sourceTree = "<group>";
+		};
+		A1186A5D007275912DA6B2B4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				92773A362BF24818B2580129 /* Analytics */,
+				EB5DF309E91DBE87BDD8EDFD /* Bookings */,
+				2022B3CB6D2D4BF271EF6D69 /* CheckIn */,
+				2FD4C8DD0B8045779B7CEC0C /* CheckOut */,
+				7667AFFF0A6D766DBAAC284C /* Dashboard */,
+				5656E7B26D4B52DDFF56B9FD /* Logs */,
+				38F770DEB55C267AE7BFDE42 /* Rooms */,
+				47996395FE9B604BE6F969F5 /* Settings */,
+				A3FE586122E6D25602D756FC /* Shared */,
+				A1166777631CF02DAEE2E52E /* Staff */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A3FE586122E6D25602D756FC /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				BB56B80F499D3799054B0FC9 /* ReceiptCameraView.swift */,
+				5476B778EE59FE86D20BA757 /* ReceiptThumbnailView.swift */,
+				D76D4ED9E91DED65900FC5ED /* StatCard.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		B682A48A4B75B89507E379AA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B81C09B3A6C8887047F1B2C7 /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		BF8355BCB2CEEC9A622BED47 = {
+			isa = PBXGroup;
+			children = (
+				85D1B414460DBB01AF61E92D /* HotelFrontDesk */,
+				74E0DEAC0606E9B4ABFA13DD /* HotelFrontDeskTests */,
+				DDB78F187AC8E52C0AC48FFE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CC81F568261D960AE2B8851B /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				ADBFD2A00696ACDB718D0702 /* BackupService.swift */,
+				748DA03E40D1C2942DD16B1D /* CloudKitConfig.swift */,
+				421EE74B16DBAAD52ECC6616 /* CloudKitService.swift */,
+				ADF7CB81F56D7A359846072B /* EncryptionHelper.swift */,
+				98932D3726A1271FD0AAC17C /* KeychainHelper.swift */,
+				5ED8B77884CFF83A0D793D3C /* LanguageService.swift */,
+				51B9E312E89CDC4E69F47D68 /* LocalStorageService.swift */,
+				B573D4632A25802090515989 /* NightAuditService.swift */,
+				A4F0DAEA344BBBF069731890 /* OperationLogService.swift */,
+				B59634BB9041B6E7D71ED718 /* OTABookingService.swift */,
+				CA0CCBD95244DBB178AB043F /* OverdueCheckoutMonitor.swift */,
+				0059CEF727FFAE626B415030 /* PricingService.swift */,
+				EA983A0EAD4D92E182BE87A8 /* ReceiptImageService.swift */,
+				6B445D4B447DD2017AEBFDB0 /* ReportGenerator.swift */,
+				8B4791BF04AEB25B4318842E /* RoomLockService.swift */,
+				DCDC83D8217934970F008634 /* StaffService.swift */,
+				522F203E8D161D0D2D802461 /* TestDataGenerator.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		DDB78F187AC8E52C0AC48FFE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B2A1BE163FA58BFDDD470CE7 /* HotelFrontDesk.app */,
+				6E55E94E70AEF455BBAC7746 /* HotelFrontDeskTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EB5DF309E91DBE87BDD8EDFD /* Bookings */ = {
+			isa = PBXGroup;
+			children = (
+				2CA8D37EDBEAFECC098048A8 /* OTABookingFormView.swift */,
+				BBDEDAF69E9E59B2AE725E50 /* OTABookingListView.swift */,
+			);
+			path = Bookings;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0F64A6EC4B3A3695FADA5176 /* HotelFrontDeskTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9771DA3E6A7D1ADF2322B70A /* Build configuration list for PBXNativeTarget "HotelFrontDeskTests" */;
+			buildPhases = (
+				06D889989D98FC543F6AE4B5 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D9EE915C4D0CF3FB2FDB67A6 /* PBXTargetDependency */,
+			);
+			name = HotelFrontDeskTests;
+			packageProductDependencies = (
+			);
+			productName = HotelFrontDeskTests;
+			productReference = 6E55E94E70AEF455BBAC7746 /* HotelFrontDeskTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		8347464100A2BA4B7F3500BB /* HotelFrontDesk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 257A80A742055D90BB1A506A /* Build configuration list for PBXNativeTarget "HotelFrontDesk" */;
+			buildPhases = (
+				5F6255970507271E45E60A93 /* Sources */,
+				5D1BCFDE8552BDA99663A57D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HotelFrontDesk;
+			packageProductDependencies = (
+			);
+			productName = HotelFrontDesk;
+			productReference = B2A1BE163FA58BFDDD470CE7 /* HotelFrontDesk.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E2582B25ADA17BF65C531892 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 85D61A0A9A2D0E700FD9B18E /* Build configuration list for PBXProject "HotelFrontDesk" */;
+			developmentRegion = "zh-Hans";
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+				"zh-Hans",
+			);
+			mainGroup = BF8355BCB2CEEC9A622BED47;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = DDB78F187AC8E52C0AC48FFE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8347464100A2BA4B7F3500BB /* HotelFrontDesk */,
+				0F64A6EC4B3A3695FADA5176 /* HotelFrontDeskTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5D1BCFDE8552BDA99663A57D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB587276B54D78B2E542F603 /* Assets.xcassets in Resources */,
+				DEE297B95AD00BE9F71594DC /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		06D889989D98FC543F6AE4B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC25C251782B03FC0A2E5B89 /* AnalyticsCalculationTests.swift in Sources */,
+				59F5993163C431BD815939FF /* CheckInValidationTests.swift in Sources */,
+				8D4B725DF3FD2056B7461B59 /* CheckOutValidationTests.swift in Sources */,
+				683B0BA72B79FF3BCB8ECFBF /* DataIntegrityTests.swift in Sources */,
+				6CEF5D58357C849D1E7BFD06 /* DateHelpersTests.swift in Sources */,
+				9D8315965261C81D599B6CE1 /* DepositTests.swift in Sources */,
+				E232E3FA01746B954B2A9BEC /* EdgeCaseTests.swift in Sources */,
+				2033614E0661E581B0EF8435 /* LocalStorageServiceTests.swift in Sources */,
+				E9171F064E313311D2639E93 /* PricingTests.swift in Sources */,
+				DCBA46F94806CE70ACA1D185 /* ReservationTests.swift in Sources */,
+				0C55C5A6E6FE20E80FBD1840 /* RoomModelTests.swift in Sources */,
+				418654321DDF38674BFBD981 /* SecurityTests.swift in Sources */,
+				1A2B3C4D5E6F708192A3B4C5 /* StaffServiceTests.swift in Sources */,
+				D0F8F17596E6C54FBFC4FF76 /* StorageStressTests.swift in Sources */,
+				B206FF6A71ABB736D9B49B64 /* WorkflowIntegrationTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F6255970507271E45E60A93 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2749825AA836A2D8058E16C /* AnalyticsView.swift in Sources */,
+				52C64F6A9CBB62942E2DFB77 /* AnalyticsViewModel.swift in Sources */,
+				5BF2E8A6AAF5CFE7E347D517 /* AppSettings.swift in Sources */,
+				D2CFDB5F43FE2CB468CA4549 /* BackupService.swift in Sources */,
+				4FE8F27E08B495622DB82AC9 /* BackupSettingsView.swift in Sources */,
+				DAB9951A7CCB257CF49643B6 /* CheckInView.swift in Sources */,
+				7F506A4654D60ED1581E7AD2 /* CheckInViewModel.swift in Sources */,
+				3A0DCD16C10BD2ED10C4C7C8 /* CheckOutView.swift in Sources */,
+				6748BC97E76E0A98F9F9A5C4 /* CheckOutViewModel.swift in Sources */,
+				02BC712077217C99BBE21ED0 /* CloudKitConfig.swift in Sources */,
+				0F469E03D753FFDEA99CBC61 /* CloudKitService.swift in Sources */,
+				F383ECA3F9401C9C3E36FE66 /* Color+Theme.swift in Sources */,
+				483C4B13FF7BD03FE6E0E58E /* ContentView.swift in Sources */,
+				3E49C80EDFDDA5A159C8CF0A /* DashboardView.swift in Sources */,
+				28A5F5017CFABF2BE54DDCE4 /* DashboardViewModel.swift in Sources */,
+				19C160B02E43EDFAE8B433CC /* Date+Helpers.swift in Sources */,
+				376294F758158E2C442E76D1 /* DepositRecord.swift in Sources */,
+				FCBB9589C00EDC72046295E4 /* DepositRefundView.swift in Sources */,
+				58E892FBB11FA91896734BB1 /* EncryptionHelper.swift in Sources */,
+				48A8690681817824534B512D /* ErrorHelper.swift in Sources */,
+				EB070FB12A81BBA4C67F2490 /* Guest.swift in Sources */,
+				750A568372F202A3A9EC760B /* GuestFormView.swift in Sources */,
+				83AB45724B244900604B23E8 /* HotelFrontDeskApp.swift in Sources */,
+				4EC7FD874931488BE90AAC52 /* IDCardScannerView.swift in Sources */,
+				812B00BF27BCD274EBABD3F9 /* KeychainHelper.swift in Sources */,
+				5DD98A5ABC5C36A579E2BB4B /* LanguageService.swift in Sources */,
+				2C2D7E87C79C4B9CCF3A85C2 /* LocalStorageService.swift in Sources */,
+				CC87B00C94D306738974F945 /* NightAuditService.swift in Sources */,
+				0B95C6B909B216ED298B96CF /* NightAuditView.swift in Sources */,
+				DDBAB94C20D7850B8745D195 /* OTABooking.swift in Sources */,
+				D51E83D0B6DF041029AD1907 /* OTABookingFormView.swift in Sources */,
+				C545FA793024BC43B8F18743 /* OTABookingListView.swift in Sources */,
+				E02F09B7D69122C2C468A016 /* OTABookingService.swift in Sources */,
+				3D55996E80A3891E80C5E2ED /* OccupiedRoomPickerView.swift in Sources */,
+				1C3B26374F2DE2590AD58FEC /* OperationLog.swift in Sources */,
+				AED35D71299211FF711B9181 /* OperationLogService.swift in Sources */,
+				FA7939B959D42FBCF64E9228 /* OperationLogView.swift in Sources */,
+				CA528F705CB128BD63C1DAB5 /* OverdueCheckoutMonitor.swift in Sources */,
+				43F581D0DC5DA8CAEA6CBCFE /* PreviewData.swift in Sources */,
+				B3F130FCA07913AD74E46D73 /* PricingService.swift in Sources */,
+				DC55B70FB2C8EBA164742740 /* ReceiptCameraView.swift in Sources */,
+				662F57339A255FA6E0CF495C /* ReceiptImageService.swift in Sources */,
+				5175339BAE6E9E6326210021 /* ReceiptThumbnailView.swift in Sources */,
+				ECFA5E63EACB5A24FE03785A /* ReportExportView.swift in Sources */,
+				3C8CF7F3CB50A5C92FCB39A8 /* ReportGenerator.swift in Sources */,
+				CC74FDDC0A241FC24F41E328 /* Reservation.swift in Sources */,
+				30025625FCFC5872C74209A5 /* Room.swift in Sources */,
+				3176D1B1BD6AE88955FFED1D /* RoomCardView.swift in Sources */,
+				9D78EDFBD74B0DCD147E7619 /* RoomDetailView.swift in Sources */,
+				11A245695BCAF0E8682F304C /* RoomGridView.swift in Sources */,
+				EF8342CB0B27165F0893C866 /* RoomHistoryCalendarView.swift in Sources */,
+				4544A0D6960F4B6CC1438DE6 /* RoomListViewModel.swift in Sources */,
+				E9F6DD5B702E5F14A6C12939 /* RoomLockService.swift in Sources */,
+				5F774E5799BE5548EB1594CE /* RoomPickerView.swift in Sources */,
+				A40BD2769B8E892B6A7B7540 /* RoomSetupView.swift in Sources */,
+				5A6BCC5438AFE40F614402D2 /* RoomStatusBadge.swift in Sources */,
+				713562470C6FB97EAF2F66B0 /* RoomTransferView.swift in Sources */,
+				845549ACC2335AB8F8843B64 /* SpecialDatePrice.swift in Sources */,
+				B373FF28F89448ED7B9B431E /* SpecialDatePriceView.swift in Sources */,
+				6B593E3BE75D8F8401503C70 /* Staff.swift in Sources */,
+				D47ED18392574A73431FBA36 /* StaffLoginView.swift in Sources */,
+				3BD4401E89AF148E6D380D24 /* StaffManageView.swift in Sources */,
+				18A87E329B12351F96DA5E35 /* StaffService.swift in Sources */,
+				99C981AEC9E4EF95604035DB /* StatCard.swift in Sources */,
+				50D367555E366E305530BF49 /* TestDataGenerator.swift in Sources */,
+				8AB6C2DB9BB2D2ABFD589D9D /* Validators.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D9EE915C4D0CF3FB2FDB67A6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8347464100A2BA4B7F3500BB /* HotelFrontDesk */;
+			targetProxy = 9AFEA0962B410FAD3C261FC4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B81C09B3A6C8887047F1B2C7 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1FC16A80E2F8FD2DAE2B235F /* en */,
+				5A251C2A1FCD3C4024346A25 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0A17D8ACB9312AEA85805617 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hotel.frontdesk.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HotelFrontDesk.app/HotelFrontDesk";
+			};
+			name = Debug;
+		};
+		0BF7B992BAC2D91415E3B11A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = HotelFrontDesk/HotelFrontDesk.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "酒店前台";
+				INFOPLIST_KEY_NSCameraUsageDescription = "需要使用相机扫描客人身份证或 OTA 订单图片，自动录入信息";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "需要访问相册导入 OTA 订单截图或 POS 小票照片";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hotel.frontdesk;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		1A07893C2CA340E060452EBF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hotel.frontdesk.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HotelFrontDesk.app/HotelFrontDesk";
+			};
+			name = Release;
+		};
+		4821DF1E8428E3E203B3C358 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		606CAAB5A03B8E85E0B903D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C36608BC542FF6F4CC0AF946 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = HotelFrontDesk/HotelFrontDesk.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "酒店前台";
+				INFOPLIST_KEY_NSCameraUsageDescription = "需要使用相机扫描客人身份证或 OTA 订单图片，自动录入信息";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "需要访问相册导入 OTA 订单截图或 POS 小票照片";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hotel.frontdesk;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		257A80A742055D90BB1A506A /* Build configuration list for PBXNativeTarget "HotelFrontDesk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C36608BC542FF6F4CC0AF946 /* Debug */,
+				0BF7B992BAC2D91415E3B11A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		85D61A0A9A2D0E700FD9B18E /* Build configuration list for PBXProject "HotelFrontDesk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				606CAAB5A03B8E85E0B903D3 /* Debug */,
+				4821DF1E8428E3E203B3C358 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9771DA3E6A7D1ADF2322B70A /* Build configuration list for PBXNativeTarget "HotelFrontDeskTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A17D8ACB9312AEA85805617 /* Debug */,
+				1A07893C2CA340E060452EBF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E2582B25ADA17BF65C531892 /* Project object */;
+}

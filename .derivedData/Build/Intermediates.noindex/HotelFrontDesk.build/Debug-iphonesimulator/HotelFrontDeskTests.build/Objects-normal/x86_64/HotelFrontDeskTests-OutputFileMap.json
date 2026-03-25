@@ -1,0 +1,149 @@
+{
+  "" : {
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/HotelFrontDeskTests-primary.dia",
+    "emit-module-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/HotelFrontDeskTests-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/HotelFrontDeskTests-primary-emit-module.dia",
+    "pch" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/HotelFrontDeskTests-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/HotelFrontDeskTests-primary.swiftdeps"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDeskTests/AnalyticsCalculationTests.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/AnalyticsCalculationTests.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/AnalyticsCalculationTests.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/AnalyticsCalculationTests.dia",
+    "index-unit-output-path" : "/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/AnalyticsCalculationTests.o",
+    "llvm-bc" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/AnalyticsCalculationTests.bc",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/AnalyticsCalculationTests.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/AnalyticsCalculationTests.swiftdeps",
+    "swiftmodule" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/AnalyticsCalculationTests~partial.swiftmodule"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDeskTests/CheckInValidationTests.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/CheckInValidationTests.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/CheckInValidationTests.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/CheckInValidationTests.dia",
+    "index-unit-output-path" : "/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/CheckInValidationTests.o",
+    "llvm-bc" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/CheckInValidationTests.bc",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/CheckInValidationTests.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/CheckInValidationTests.swiftdeps",
+    "swiftmodule" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/CheckInValidationTests~partial.swiftmodule"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDeskTests/CheckOutValidationTests.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/CheckOutValidationTests.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/CheckOutValidationTests.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/CheckOutValidationTests.dia",
+    "index-unit-output-path" : "/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/CheckOutValidationTests.o",
+    "llvm-bc" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/CheckOutValidationTests.bc",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/CheckOutValidationTests.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/CheckOutValidationTests.swiftdeps",
+    "swiftmodule" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/CheckOutValidationTests~partial.swiftmodule"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDeskTests/DataIntegrityTests.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DataIntegrityTests.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DataIntegrityTests.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DataIntegrityTests.dia",
+    "index-unit-output-path" : "/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DataIntegrityTests.o",
+    "llvm-bc" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DataIntegrityTests.bc",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DataIntegrityTests.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DataIntegrityTests.swiftdeps",
+    "swiftmodule" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DataIntegrityTests~partial.swiftmodule"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDeskTests/DateHelpersTests.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DateHelpersTests.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DateHelpersTests.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DateHelpersTests.dia",
+    "index-unit-output-path" : "/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DateHelpersTests.o",
+    "llvm-bc" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DateHelpersTests.bc",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DateHelpersTests.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DateHelpersTests.swiftdeps",
+    "swiftmodule" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DateHelpersTests~partial.swiftmodule"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDeskTests/DepositTests.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DepositTests.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DepositTests.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DepositTests.dia",
+    "index-unit-output-path" : "/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DepositTests.o",
+    "llvm-bc" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DepositTests.bc",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DepositTests.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DepositTests.swiftdeps",
+    "swiftmodule" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/DepositTests~partial.swiftmodule"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDeskTests/EdgeCaseTests.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/EdgeCaseTests.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/EdgeCaseTests.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/EdgeCaseTests.dia",
+    "index-unit-output-path" : "/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/EdgeCaseTests.o",
+    "llvm-bc" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/EdgeCaseTests.bc",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/EdgeCaseTests.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/EdgeCaseTests.swiftdeps",
+    "swiftmodule" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/EdgeCaseTests~partial.swiftmodule"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDeskTests/LocalStorageServiceTests.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/LocalStorageServiceTests.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/LocalStorageServiceTests.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/LocalStorageServiceTests.dia",
+    "index-unit-output-path" : "/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/LocalStorageServiceTests.o",
+    "llvm-bc" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/LocalStorageServiceTests.bc",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/LocalStorageServiceTests.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/LocalStorageServiceTests.swiftdeps",
+    "swiftmodule" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/LocalStorageServiceTests~partial.swiftmodule"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDeskTests/PricingTests.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/PricingTests.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/PricingTests.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/PricingTests.dia",
+    "index-unit-output-path" : "/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/PricingTests.o",
+    "llvm-bc" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/PricingTests.bc",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/PricingTests.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/PricingTests.swiftdeps",
+    "swiftmodule" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/PricingTests~partial.swiftmodule"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDeskTests/ReservationTests.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/ReservationTests.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/ReservationTests.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/ReservationTests.dia",
+    "index-unit-output-path" : "/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/ReservationTests.o",
+    "llvm-bc" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/ReservationTests.bc",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/ReservationTests.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/ReservationTests.swiftdeps",
+    "swiftmodule" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/ReservationTests~partial.swiftmodule"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDeskTests/RoomModelTests.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/RoomModelTests.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/RoomModelTests.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/RoomModelTests.dia",
+    "index-unit-output-path" : "/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/RoomModelTests.o",
+    "llvm-bc" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/RoomModelTests.bc",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/RoomModelTests.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/RoomModelTests.swiftdeps",
+    "swiftmodule" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/RoomModelTests~partial.swiftmodule"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDeskTests/SecurityTests.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/SecurityTests.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/SecurityTests.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/SecurityTests.dia",
+    "index-unit-output-path" : "/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/SecurityTests.o",
+    "llvm-bc" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/SecurityTests.bc",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/SecurityTests.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/SecurityTests.swiftdeps",
+    "swiftmodule" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/SecurityTests~partial.swiftmodule"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDeskTests/StorageStressTests.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/StorageStressTests.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/StorageStressTests.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/StorageStressTests.dia",
+    "index-unit-output-path" : "/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/StorageStressTests.o",
+    "llvm-bc" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/StorageStressTests.bc",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/StorageStressTests.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/StorageStressTests.swiftdeps",
+    "swiftmodule" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/StorageStressTests~partial.swiftmodule"
+  },
+  "/Users/tuonisitake/Documents/Claude Code/酒店前台app/HotelFrontDeskTests/WorkflowIntegrationTests.swift" : {
+    "const-values" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/WorkflowIntegrationTests.swiftconstvalues",
+    "dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/WorkflowIntegrationTests.d",
+    "diagnostics" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/WorkflowIntegrationTests.dia",
+    "index-unit-output-path" : "/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/WorkflowIntegrationTests.o",
+    "llvm-bc" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/WorkflowIntegrationTests.bc",
+    "object" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/WorkflowIntegrationTests.o",
+    "swift-dependencies" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/WorkflowIntegrationTests.swiftdeps",
+    "swiftmodule" : "/Users/tuonisitake/Documents/Claude Code/酒店前台app/.derivedData/Build/Intermediates.noindex/HotelFrontDesk.build/Debug-iphonesimulator/HotelFrontDeskTests.build/Objects-normal/x86_64/WorkflowIntegrationTests~partial.swiftmodule"
+  }
+}
