@@ -50,10 +50,12 @@ final class RoomListViewModel: ObservableObject {
             rooms = try await service.fetchAllRooms()
         } catch {
             errorMessage = "加载房间失败: \(ErrorHelper.userMessage(error))"
-            // 开发阶段用预览数据
+#if DEBUG
+            // 仅在调试阶段回退到预览数据，避免生产环境误用假房态
             if rooms.isEmpty {
                 rooms = PreviewData.rooms
             }
+#endif
         }
         isLoading = false
     }

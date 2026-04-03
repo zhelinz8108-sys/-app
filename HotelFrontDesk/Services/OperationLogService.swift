@@ -32,7 +32,7 @@ final class OperationLogService {
     private init() {
         let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
         let dir = docs.appendingPathComponent("HotelLocalData")
-        try? fileManager.createDirectory(at: dir, withIntermediateDirectories: true)
+        SecureStorageHelper.ensureDirectory(at: dir, excludeFromBackup: true)
         filePath = dir.appendingPathComponent("operation_logs.json")
         loadLogs()
     }
@@ -99,12 +99,12 @@ final class OperationLogService {
 
         switch format {
         case .csv:
-            try csvContent(for: logsToExport).write(to: url, atomically: true, encoding: .utf8)
+            try SecureStorageHelper.write(Data(csvContent(for: logsToExport).utf8), to: url, excludeFromBackup: true)
         case .json:
             let encoder = JSONEncoder()
             encoder.dateEncodingStrategy = .iso8601
             let data = try encoder.encode(logsToExport)
-            try data.write(to: url, options: .atomic)
+            try SecureStorageHelper.write(data, to: url, excludeFromBackup: true)
         }
 
         return url
@@ -116,7 +116,7 @@ final class OperationLogService {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         guard let data = try? encoder.encode(logs) else { return }
-        try? data.write(to: filePath, options: .atomic)
+        try? SecureStorageHelper.write(data, to: filePath, excludeFromBackup: true)
     }
 
     private func loadLogs() {

@@ -15,6 +15,7 @@ struct CheckInView: View {
                     idType: $viewModel.idType,
                     idNumber: $viewModel.idNumber,
                     phone: $viewModel.phone,
+                    email: $viewModel.guestEmail,
                     notes: $viewModel.guestNotes,
                     numberOfGuests: $viewModel.numberOfGuests
                 )
@@ -23,7 +24,7 @@ struct CheckInView: View {
                 RoomPickerView(
                     vacantRooms: roomListViewModel.vacantRooms,
                     selectedRoom: $viewModel.selectedRoom,
-                    onSelectRoom: { room in viewModel.selectRoom(room) }
+                    onSelectRoom: { room in await viewModel.selectRoom(room) }
                 )
 
                 // 入住类型

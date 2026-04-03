@@ -8,12 +8,37 @@ struct IDCardScanResult: Equatable {
     var idNumber: String
 }
 
+// MARK: - OCR 模式
+enum OCRMode: String, CaseIterable {
+    case local = "本地识别"
+    case paddleOCR = "PaddleOCR"
+
+    var description: String {
+        switch self {
+        case .local: return "Apple Vision（无需网络）"
+        case .paddleOCR: return "PaddleOCR（识别更准）"
+        }
+    }
+}
+
 // MARK: - 身份证扫描视图
 struct IDCardScannerView: View {
     var onResult: (IDCardScanResult) -> Void
+    var onExtendedResult: ((IDCardScanResultExtended) -> Void)?
+
     @Environment(\.dismiss) private var dismiss
     @StateObject private var scanner = IDCardScanner()
-    @State private var showNoCameraAlert = false
+    @State private var ocrMode: OCRMode = {
+        let saved = UserDefaults.standard.string(forKey: "ocrMode") ?? ""
+        return OCRMode(rawValue: saved) ?? .paddleOCR
+    }()
+    @State private var paddleOCRAvailable = false
+
+    init(onResult: @escaping (IDCardScanResult) -> Void,
+         onExtendedResult: ((IDCardScanResultExtended) -> Void)? = nil) {
+        self.onResult = onResult
+        self.onExtendedResult = onExtendedResult
+    }
 
     var body: some View {
         NavigationStack {
@@ -23,10 +48,42 @@ struct IDCardScannerView: View {
                     CameraPreviewView(session: scanner.session)
                         .ignoresSafeArea()
 
-                    // 身份证对齐引导框
                     VStack {
+                        // OCR 模式切换
+                        HStack(spacing: 8) {
+                            ForEach(OCRMode.allCases, id: \.self) { mode in
+                                Button {
+                                    ocrMode = mode
+                                    UserDefaults.standard.set(mode.rawValue, forKey: "ocrMode")
+                                } label: {
+                                    HStack(spacing: 4) {
+                                        Image(systemName: mode == .local ? "eye" : "server.rack")
+                                            .font(.caption2)
+                                        Text(mode.rawValue)
+                                            .font(.caption)
+                                    }
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 6)
+                                    .background(ocrMode == mode ? Color.blue : Color.black.opacity(0.5))
+                                    .foregroundStyle(.white)
+                                    .clipShape(Capsule())
+                                }
+                                .disabled(mode == .paddleOCR && !paddleOCRAvailable)
+                                .opacity(mode == .paddleOCR && !paddleOCRAvailable ? 0.5 : 1)
+                            }
+                        }
+                        .padding(.top, 60)
+
+                        if ocrMode == .paddleOCR && paddleOCRAvailable {
+                            Text("🔥 PaddleOCR 增强识别")
+                                .font(.caption2)
+                                .foregroundStyle(.green)
+                                .padding(.top, 4)
+                        }
+
                         Spacer()
 
+                        // 身份证对齐引导框
                         RoundedRectangle(cornerRadius: 12)
                             .stroke(style: StrokeStyle(lineWidth: 3, dash: [10]))
                             .foregroundStyle(.white)
@@ -45,7 +102,7 @@ struct IDCardScannerView: View {
                             HStack {
                                 ProgressView()
                                     .tint(.white)
-                                Text("识别中...")
+                                Text(ocrMode == .paddleOCR ? "PaddleOCR 识别中..." : "识别中...")
                                     .foregroundStyle(.white)
                             }
                             .padding()
@@ -54,10 +111,17 @@ struct IDCardScannerView: View {
                                 .foregroundStyle(.orange)
                                 .font(.subheadline)
                                 .padding()
+                        } else if let ext = scanner.extendedResult {
+                            // 显示识别置信度
+                            Text("✅ 识别成功 (置信度: \(Int(ext.confidence * 100))%)")
+                                .foregroundStyle(.green)
+                                .font(.subheadline)
+                                .padding()
                         }
 
                         // 拍照按钮
                         Button {
+                            scanner.ocrMode = ocrMode
                             scanner.capturePhoto()
                         } label: {
                             Circle()
@@ -93,11 +157,21 @@ struct IDCardScannerView: View {
             .onChange(of: scanner.scanResult) { _, result in
                 if let result {
                     onResult(result)
+                    if let ext = scanner.extendedResult {
+                        onExtendedResult?(ext)
+                    }
                     dismiss()
                 }
             }
             .onAppear {
                 scanner.startSession()
+                // 检查 PaddleOCR 服务是否可用
+                Task {
+                    paddleOCRAvailable = await PaddleOCRService.shared.isAvailable()
+                    if !paddleOCRAvailable && ocrMode == .paddleOCR {
+                        ocrMode = .local
+                    }
+                }
             }
             .onDisappear {
                 scanner.stopSession()
@@ -136,8 +210,11 @@ struct CameraPreviewView: UIViewRepresentable {
 @MainActor
 final class IDCardScanner: NSObject, ObservableObject {
     @Published var scanResult: IDCardScanResult?
+    @Published var extendedResult: IDCardScanResultExtended?
     @Published var isProcessing = false
     @Published var errorMessage: String?
+
+    var ocrMode: OCRMode = .paddleOCR
 
     let session = AVCaptureSession()
     private let photoOutput = AVCapturePhotoOutput()
@@ -183,8 +260,23 @@ final class IDCardScanner: NSObject, ObservableObject {
         photoOutput.capturePhoto(with: settings, delegate: self)
     }
 
-    // MARK: - OCR 识别
-    private func recognizeText(from image: CGImage) {
+    // MARK: - PaddleOCR 识别（远程）
+    private func recognizeWithPaddleOCR(from image: UIImage) {
+        Task {
+            do {
+                let result = try await PaddleOCRService.shared.recognize(image: image)
+                self.extendedResult = result
+                self.scanResult = result.basic
+                self.isProcessing = false
+            } catch {
+                self.isProcessing = false
+                self.errorMessage = "PaddleOCR: \(error.localizedDescription)"
+            }
+        }
+    }
+
+    // MARK: - Apple Vision OCR 识别（本地）
+    private func recognizeWithVision(from image: CGImage) {
         let request = VNRecognizeTextRequest { [weak self] request, error in
             Task { @MainActor in
                 guard let self else { return }
@@ -220,7 +312,7 @@ final class IDCardScanner: NSObject, ObservableObject {
         }
     }
 
-    // MARK: - 解析身份证文字
+    // MARK: - 解析身份证文字（本地 Vision 模式）
     private func parseIDCard(texts: [String]) -> IDCardScanResult? {
         let fullText = texts.joined(separator: " ")
         var name: String?
@@ -237,20 +329,16 @@ final class IDCardScanner: NSObject, ObservableObject {
         for (index, text) in texts.enumerated() {
             let trimmed = text.trimmingCharacters(in: .whitespaces)
 
-            // 方式1：同一行包含「姓名」
             if trimmed.contains("姓名") {
                 let afterName = trimmed.replacingOccurrences(of: "姓名", with: "")
                     .trimmingCharacters(in: .whitespaces)
                 if !afterName.isEmpty {
                     name = afterName
-                }
-                // 方式2：下一行是姓名
-                else if index + 1 < texts.count {
+                } else if index + 1 < texts.count {
                     name = texts[index + 1].trimmingCharacters(in: .whitespaces)
                 }
             }
 
-            // 方式3：如果文本中有「名」字开头（OCR可能把姓名拆开）
             if trimmed.hasPrefix("名") && trimmed.count > 1 {
                 let candidate = String(trimmed.dropFirst()).trimmingCharacters(in: .whitespaces)
                 if !candidate.isEmpty && name == nil {
@@ -259,8 +347,7 @@ final class IDCardScanner: NSObject, ObservableObject {
             }
         }
 
-        // 如果没通过「姓名」关键字找到，尝试用位置推断
-        // 身份证上姓名通常是纯中文2-4个字，且不包含数字
+        // 启发式姓名检测
         if name == nil {
             for text in texts {
                 let trimmed = text.trimmingCharacters(in: .whitespaces)
@@ -276,7 +363,6 @@ final class IDCardScanner: NSObject, ObservableObject {
             }
         }
 
-        // 至少要识别到身份证号才返回结果
         guard let idNumber else { return nil }
 
         return IDCardScanResult(
@@ -304,7 +390,13 @@ extension IDCardScanner: AVCapturePhotoCaptureDelegate {
                 return
             }
 
-            self.recognizeText(from: cgImage)
+            // 根据模式选择 OCR 引擎
+            switch self.ocrMode {
+            case .paddleOCR:
+                self.recognizeWithPaddleOCR(from: uiImage)
+            case .local:
+                self.recognizeWithVision(from: cgImage)
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ final class LocalStorageService {
     private init() {
         let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
         baseDir = docs.appendingPathComponent("HotelLocalData")
-        try? fileManager.createDirectory(at: baseDir, withIntermediateDirectories: true)
+        SecureStorageHelper.ensureDirectory(at: baseDir, excludeFromBackup: true)
         loadAll()
     }
 
@@ -145,6 +145,14 @@ final class LocalStorageService {
 
     func checkOut(reservationID: String) {
         markReservationCheckedOut(id: reservationID, at: Date(), markDirty: true)
+    }
+
+    func restoreActiveReservation(id: String) {
+        if let idx = reservations.firstIndex(where: { $0.id == id }) {
+            reservations[idx].isActive = true
+            reservations[idx].actualCheckOut = nil
+            persist(type: .reservations, markDirty: true)
+        }
     }
 
     func fetchReservationHistory(forRoomID roomID: String, limit: Int = 50) -> [Reservation] {
@@ -491,7 +499,7 @@ final class LocalStorageService {
             case .reservations: data = try encoder.encode(reservations.map { CodableReservation($0) })
             case .deposits: data = try encoder.encode(deposits.map { CodableDeposit($0) })
             }
-            try data.write(to: filePath(for: type), options: .atomic)
+            try SecureStorageHelper.write(data, to: filePath(for: type), excludeFromBackup: true)
         } catch {
             print("本地存储写入失败[\(type.rawValue)]: \(error)")
         }
@@ -555,6 +563,7 @@ private struct CodableRoom: Codable {
 
 private struct CodableGuest: Codable {
     let id, name, idType, idNumber, phone: String
+    let email: String?
     let notes: String?
 
     init(_ g: Guest) throws {
@@ -562,6 +571,7 @@ private struct CodableGuest: Codable {
         // 加密身份证号和手机号
         idNumber = try EncryptionHelper.encrypt(g.idNumber)
         phone = try EncryptionHelper.encrypt(g.phone)
+        email = g.email
         notes = g.notes
     }
     func toGuest() throws -> Guest {
@@ -569,6 +579,7 @@ private struct CodableGuest: Codable {
               // 解密
               idNumber: try EncryptionHelper.decrypt(idNumber),
               phone: try EncryptionHelper.decrypt(phone),
+              email: email,
               notes: notes)
     }
 }

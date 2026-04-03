@@ -66,7 +66,7 @@ struct RoomSetupView: View {
                     Text("账号")
                 } footer: {
                     Text(staffService.isManager
-                         ? "管理员可查看数据分析、操作日志，管理员工和房间"
+                         ? "管理员可查看数据分析、操作日志，管理员工和房间；只有没有订单记录的空房才能删除"
                          : "前台员工可办理入住/退房、查看房态")
                 }
 
@@ -133,10 +133,12 @@ struct RoomSetupView: View {
                                 roomRow(room)
                                     .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                                         if appSettings.isManagerMode {
-                                            Button(role: .destructive) {
-                                                Task { await deleteRoom(room) }
-                                            } label: {
-                                                Label("删除", systemImage: "trash")
+                                            if room.status == .vacant {
+                                                Button(role: .destructive) {
+                                                    Task { await deleteRoom(room) }
+                                                } label: {
+                                                    Label("删除", systemImage: "trash")
+                                                }
                                             }
                                             Button {
                                                 startEditing(room)

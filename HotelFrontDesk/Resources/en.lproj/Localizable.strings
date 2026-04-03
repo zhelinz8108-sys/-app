@@ -110,8 +110,9 @@
 "report.daily" = "Daily Report";
 
 /* Network */
-"network.localMode" = "Local Mode — iCloud unavailable, data stored on this device only";
+"network.localMode" = "Read-Only Protection Mode — cloud sync unavailable, writes are blocked to prevent conflicts";
 "network.retrying" = "Retrying";
+"network.writeLocked" = "Writes Locked";
 
 /* Login */
 "login.title" = "Staff Login";
@@ -119,7 +120,7 @@
 "login.password" = "Password";
 "login.submit" = "Log In";
 "login.error" = "Invalid username or password";
-"login.defaultHint" = "Default admin: admin / 8888";
+"login.defaultHint" = "Set up the first manager account before using the app";
 
 /* Common */
 "common.confirm" = "Confirm";

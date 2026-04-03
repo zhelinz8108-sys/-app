@@ -99,8 +99,9 @@ struct DepositRefundView: View {
 
                 // 退押金按钮
                 Button {
-                    viewModel.isSubmitting = true
-                    Task { await viewModel.performRefund() }
+                    Task {
+                        await viewModel.performRefund()
+                    }
                 } label: {
                     HStack {
                         Spacer()

@@ -110,8 +110,9 @@
 "report.daily" = "每日营收报表";
 
 /* Network */
-"network.localMode" = "本地模式 — iCloud 不可用，数据仅存储在本设备";
+"network.localMode" = "只读保护模式 — 云同步不可用，已禁止写入以防数据冲突";
 "network.retrying" = "重试中";
+"network.writeLocked" = "写入已锁定";
 
 /* Login */
 "login.title" = "员工登录";
@@ -119,7 +120,7 @@
 "login.password" = "密码";
 "login.submit" = "登 录";
 "login.error" = "用户名或密码错误";
-"login.defaultHint" = "默认管理员: admin / 8888";
+"login.defaultHint" = "首次安装请先初始化管理员账号";
 
 /* Common */
 "common.confirm" = "确定";

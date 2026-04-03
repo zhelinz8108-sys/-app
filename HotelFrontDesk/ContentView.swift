@@ -9,26 +9,30 @@ struct ContentView: View {
 
     var body: some View {
         if staffService.isLoggedIn {
-            mainTabView
-                .onAppear { overdueMonitor.start() }
-                .onDisappear { overdueMonitor.stop() }
-                .onChange(of: cloudKit.dataProtectionIssue) { _, newValue in
-                    if newValue != nil {
-                        showRecoveryGuide = true
+            if staffService.requiresMandatoryPasswordChange {
+                MandatoryPasswordChangeView()
+            } else {
+                mainTabView
+                    .onAppear { overdueMonitor.start() }
+                    .onDisappear { overdueMonitor.stop() }
+                    .onChange(of: cloudKit.dataProtectionIssue) { _, newValue in
+                        if newValue != nil {
+                            showRecoveryGuide = true
+                        }
                     }
-                }
-                .alert("超期未退房提醒", isPresented: $overdueMonitor.showAlert) {
-                    Button("知道了") {
-                        overdueMonitor.dismissAlert()
+                    .alert("超期未退房提醒", isPresented: $overdueMonitor.showAlert) {
+                        Button("知道了") {
+                            overdueMonitor.dismissAlert()
+                        }
+                    } message: {
+                        Text(overdueMonitor.alertMessage)
                     }
-                } message: {
-                    Text(overdueMonitor.alertMessage)
-                }
-                .sheet(isPresented: $showRecoveryGuide) {
-                    NavigationStack {
-                        BackupSettingsView()
+                    .sheet(isPresented: $showRecoveryGuide) {
+                        NavigationStack {
+                            BackupSettingsView()
+                        }
                     }
-                }
+            }
         } else {
             StaffLoginView(staffService: staffService)
         }
@@ -73,10 +77,17 @@ struct ContentView: View {
                         .font(.caption2)
                         .fontWeight(.medium)
                     Spacer()
-                    Image(systemName: "arrow.triangle.2.circlepath")
-                        .font(.caption2)
-                    Text(L("network.retrying"))
-                        .font(.caption2)
+                    if cloudKit.isReadOnlyMode {
+                        Image(systemName: "lock.fill")
+                            .font(.caption2)
+                        Text(L("network.writeLocked"))
+                            .font(.caption2)
+                    } else {
+                        Image(systemName: "arrow.triangle.2.circlepath")
+                            .font(.caption2)
+                        Text(L("network.retrying"))
+                            .font(.caption2)
+                    }
                 }
                 .foregroundStyle(.white.opacity(0.85))
                 .padding(.horizontal, 12)

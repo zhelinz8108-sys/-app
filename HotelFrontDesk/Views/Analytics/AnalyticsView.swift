@@ -56,6 +56,11 @@ struct AnalyticsView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     HStack(spacing: 16) {
                         NavigationLink {
+                            DailyReconciliationView()
+                        } label: {
+                            Image(systemName: "checkmark.seal.fill")
+                        }
+                        NavigationLink {
                             NightAuditView()
                         } label: {
                             Image(systemName: "moon.stars.fill")

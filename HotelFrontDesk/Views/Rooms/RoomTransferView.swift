@@ -1,5 +1,19 @@
 import SwiftUI
 
+private enum RoomTransferError: LocalizedError {
+    case currentRoomUnavailable(String)
+    case targetRoomUnavailable(String)
+
+    var errorDescription: String? {
+        switch self {
+        case .currentRoomUnavailable(let roomNumber):
+            return "\(roomNumber) 房当前状态已变化，请刷新房态后重试换房"
+        case .targetRoomUnavailable(let roomNumber):
+            return "\(roomNumber) 房已不可用，请重新选择目标房间"
+        }
+    }
+}
+
 /// 换房操作：将客人从当前房间转移到另一间空房
 struct RoomTransferView: View {
     let currentRoom: Room
@@ -186,6 +200,7 @@ struct RoomTransferView: View {
 
     // MARK: - 执行换房
 
+    @MainActor
     private func performTransfer() async {
         guard let target = targetRoom, let res = reservation else {
             errorMessage = "请选择目标房间"
@@ -193,12 +208,19 @@ struct RoomTransferView: View {
             return
         }
 
+        var latestTargetRoom = target
+        var didUpdateReservation = false
+        var didUpdateCurrentRoom = false
+        var didUpdateTargetRoom = false
+
         do {
+            latestTargetRoom = try await validateTransferState(targetRoomID: target.id)
+
             let newRate: Double
             if adjustPrice, let rate = Double(newDailyRate), rate > 0 {
                 newRate = rate
             } else {
-                newRate = target.pricePerNight
+                newRate = latestTargetRoom.pricePerNight
             }
 
             // 1. 更新预订的 roomID 和房价
@@ -206,12 +228,15 @@ struct RoomTransferView: View {
             updatedRes.roomID = target.id
             updatedRes.dailyRate = newRate
             try await service.saveReservation(updatedRes)
+            didUpdateReservation = true
 
             // 2. 原房间 → 脏房
             try await service.updateRoomStatus(roomID: currentRoom.id, status: .cleaning)
+            didUpdateCurrentRoom = true
 
             // 3. 新房间 → 已住
             try await service.updateRoomStatus(roomID: target.id, status: .occupied)
+            didUpdateTargetRoom = true
 
             // 4. 押金记录不变（跟着 reservationID 走，不跟房间）
 
@@ -219,9 +244,9 @@ struct RoomTransferView: View {
             let guestName = res.guest?.name ?? "未知"
             logService.log(
                 type: .roomStatusChange,
-                summary: "\(guestName) 换房 \(currentRoom.roomNumber) → \(target.roomNumber)",
-                detail: "客人: \(guestName) | 原房: \(currentRoom.roomNumber)(\(currentRoom.roomType.rawValue) ¥\(Int(res.dailyRate))/晚) → 新房: \(target.roomNumber)(\(target.roomType.rawValue) ¥\(Int(newRate))/晚)\(reason.isEmpty ? "" : " | 原因: \(reason)")",
-                roomNumber: target.roomNumber
+                summary: "\(guestName) 换房 \(currentRoom.roomNumber) → \(latestTargetRoom.roomNumber)",
+                detail: "客人: \(guestName) | 原房: \(currentRoom.roomNumber)(\(currentRoom.roomType.rawValue) ¥\(Int(res.dailyRate))/晚) → 新房: \(latestTargetRoom.roomNumber)(\(latestTargetRoom.roomType.rawValue) ¥\(Int(newRate))/晚)\(reason.isEmpty ? "" : " | 原因: \(reason)")",
+                roomNumber: latestTargetRoom.roomNumber
             )
 
             // 6. 刷新房间列表
@@ -230,8 +255,56 @@ struct RoomTransferView: View {
             isSubmitting = false
             onComplete()
         } catch {
+            await rollbackTransfer(
+                reservation: res,
+                targetRoomID: target.id,
+                originalCurrentRoomStatus: currentRoom.status,
+                originalTargetRoomStatus: latestTargetRoom.status,
+                didUpdateReservation: didUpdateReservation,
+                didUpdateCurrentRoom: didUpdateCurrentRoom,
+                didUpdateTargetRoom: didUpdateTargetRoom
+            )
             errorMessage = "换房失败: \(ErrorHelper.userMessage(error))"
             isSubmitting = false
+        }
+    }
+
+    @MainActor
+    private func validateTransferState(targetRoomID: String) async throws -> Room {
+        if service.isReadOnlyMode {
+            throw CloudKitMutationError.readOnlyProtection
+        }
+
+        let latestRooms = try await service.fetchAllRooms()
+        guard let latestCurrent = latestRooms.first(where: { $0.id == currentRoom.id }),
+              latestCurrent.status == .occupied else {
+            throw RoomTransferError.currentRoomUnavailable(currentRoom.roomNumber)
+        }
+        guard let latestTarget = latestRooms.first(where: { $0.id == targetRoomID }),
+              latestTarget.status == .vacant || latestTarget.status == .reserved else {
+            throw RoomTransferError.targetRoomUnavailable(targetRoom?.roomNumber ?? "目标房间")
+        }
+        return latestTarget
+    }
+
+    @MainActor
+    private func rollbackTransfer(
+        reservation: Reservation,
+        targetRoomID: String,
+        originalCurrentRoomStatus: RoomStatus,
+        originalTargetRoomStatus: RoomStatus,
+        didUpdateReservation: Bool,
+        didUpdateCurrentRoom: Bool,
+        didUpdateTargetRoom: Bool
+    ) async {
+        if didUpdateTargetRoom {
+            try? await service.updateRoomStatus(roomID: targetRoomID, status: originalTargetRoomStatus)
+        }
+        if didUpdateCurrentRoom {
+            try? await service.updateRoomStatus(roomID: currentRoom.id, status: originalCurrentRoomStatus)
+        }
+        if didUpdateReservation {
+            try? await service.saveReservation(reservation)
         }
     }
 }

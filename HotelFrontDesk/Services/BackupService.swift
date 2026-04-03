@@ -1,15 +1,56 @@
 import UIKit
 
-/// 数据备份服务 — 自动备份到 iCloud Drive + 手动导出/导入
+/// 备份快照信息（可从 iCloud 或本地列出）
+struct BackupSnapshot: Identifiable, Comparable {
+    let id: String           // 目录名，如 "daily_20260326"
+    let date: Date
+    let meta: BackupMeta?
+    let url: URL
+    let isCloud: Bool        // true = iCloud, false = local only
+    var sizeBytes: Int64 = 0
+
+    var displayDate: String {
+        let f = DateFormatter()
+        f.dateFormat = "yyyy/M/d HH:mm"
+        if let meta { return f.string(from: meta.timestamp) }
+        return f.string(from: date)
+    }
+
+    var displaySize: String {
+        ByteCountFormatter.string(fromByteCount: sizeBytes, countStyle: .file)
+    }
+
+    static func < (lhs: BackupSnapshot, rhs: BackupSnapshot) -> Bool {
+        lhs.date > rhs.date // newest first
+    }
+}
+
+/// 数据备份服务 — 版本化每日备份到 iCloud Drive + 本地副本
 @MainActor
 final class BackupService: ObservableObject {
     static let shared = BackupService()
     private static let lastRestoreTimeKey = "lastICloudRestoreTime"
+    private static let autoBackupEnabledKey = "autoBackupEnabled"
+    private static let maxDailyBackups = 7
 
     @Published var lastBackupTime: Date?
     @Published var lastRestoreTime: Date?
     @Published var isBackingUp = false
     @Published var backupError: String?
+    @Published var availableBackups: [BackupSnapshot] = []
+
+    /// 自动备份开关（UserDefaults 持久化）
+    @Published var autoBackupEnabled: Bool {
+        didSet {
+            UserDefaults.standard.set(autoBackupEnabled, forKey: Self.autoBackupEnabledKey)
+            if autoBackupEnabled {
+                startAutoBackup()
+            } else {
+                autoBackupTask?.cancel()
+                autoBackupTask = nil
+            }
+        }
+    }
 
     /// Mark data as changed so the next auto-backup cycle will actually run
     private(set) var isDirty = false
@@ -27,16 +68,33 @@ final class BackupService: ObservableObject {
         return docs.appendingPathComponent("HotelLocalData")
     }
 
-    /// iCloud Drive 备份目录
+    /// 本地备份存档目录
+    private var localBackupArchiveDir: URL {
+        let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        return docs.appendingPathComponent("HotelBackupArchive")
+    }
+
+    /// iCloud Drive 备份目录（版本化）
     private var iCloudBackupDir: URL? {
         fileManager.url(forUbiquityContainerIdentifier: nil)?
             .appendingPathComponent("Documents/HotelBackup")
     }
 
+    /// iCloud Drive 兼容：旧版单目录位置（用于迁移）
+    private var iCloudLegacyBackupDir: URL? {
+        iCloudBackupDir
+    }
+
     private init() {
+        autoBackupEnabled = UserDefaults.standard.object(forKey: Self.autoBackupEnabledKey) as? Bool ?? true
+        SecureStorageHelper.ensureDirectory(at: localDataDir, excludeFromBackup: true)
+        SecureStorageHelper.ensureDirectory(at: localBackupArchiveDir, excludeFromBackup: true)
         loadLastBackupTime()
         loadLastRestoreTime()
-        startAutoBackup()
+        refreshAvailableBackups()
+        if autoBackupEnabled {
+            startAutoBackup()
+        }
     }
 
     private var persistentBackupFiles: [String] {
@@ -48,13 +106,29 @@ final class BackupService: ObservableObject {
         ]
     }
 
+    // MARK: - 日期标签
+
+    private func dailyBackupDirName(for date: Date = Date()) -> String {
+        let f = DateFormatter()
+        f.dateFormat = "yyyyMMdd"
+        return "daily_\(f.string(from: date))"
+    }
+
+    private func dateFromDirName(_ name: String) -> Date? {
+        guard name.hasPrefix("daily_"), name.count >= 14 else { return nil }
+        let dateStr = String(name.dropFirst(6))
+        let f = DateFormatter()
+        f.dateFormat = "yyyyMMdd"
+        return f.date(from: dateStr)
+    }
+
     // MARK: - 自动备份
 
     func startAutoBackup() {
         autoBackupTask?.cancel()
         autoBackupTask = Task {
             while !Task.isCancelled {
-                if isDirty {
+                if isDirty && autoBackupEnabled {
                     await performBackup()
                     isDirty = false
                 }
@@ -63,102 +137,231 @@ final class BackupService: ObservableObject {
         }
     }
 
-    // MARK: - 执行备份到 iCloud Drive
+    // MARK: - 夜审触发备份
+
+    /// 夜审完成后调用，强制执行一次备份（不受 isDirty 限制）
+    func performNightAuditBackup() async {
+        await performBackup()
+    }
+
+    // MARK: - 执行版本化备份
 
     func performBackup() async {
-        guard let iCloudDir = iCloudBackupDir else {
-            // iCloud 不可用，跳过
-            return
-        }
-
         isBackingUp = true
         backupError = nil
 
+        let dirName = dailyBackupDirName()
+
         do {
-            // 确保 iCloud 备份目录存在
-            try fileManager.createDirectory(at: iCloudDir, withIntermediateDirectories: true)
+            // 1. 写入本地备份存档
+            let localArchive = localBackupArchiveDir.appendingPathComponent(dirName)
+            try copyDataFiles(to: localArchive)
 
-            var copiedFiles: [String] = []
-            for fileName in persistentBackupFiles {
-                let source = localDataDir.appendingPathComponent(fileName)
-                let dest = iCloudDir.appendingPathComponent(fileName)
-
-                guard fileManager.fileExists(atPath: source.path) else {
-                    if fileManager.fileExists(atPath: dest.path) {
-                        try fileManager.removeItem(at: dest)
-                    }
-                    continue
-                }
-
-                // Atomic: copy to temp first, then replace
-                let tempDest = iCloudDir.appendingPathComponent(fileName + ".tmp")
-                if fileManager.fileExists(atPath: tempDest.path) {
-                    try fileManager.removeItem(at: tempDest)
-                }
-                try fileManager.copyItem(at: source, to: tempDest)
-                if fileManager.fileExists(atPath: dest.path) {
-                    try fileManager.removeItem(at: dest)
-                }
-                try fileManager.moveItem(at: tempDest, to: dest)
-                copiedFiles.append(fileName)
+            // 2. 写入 iCloud Drive（如果可用）
+            if let iCloudDir = iCloudBackupDir {
+                let cloudArchive = iCloudDir.appendingPathComponent(dirName)
+                try copyDataFiles(to: cloudArchive)
             }
-
-            // 同时备份小票照片目录
-            let receiptsSource = localDataDir.appendingPathComponent("receipts")
-            let receiptsDest = iCloudDir.appendingPathComponent("receipts")
-            var receiptsIncluded = false
-            if fileManager.fileExists(atPath: receiptsSource.path) {
-                if fileManager.fileExists(atPath: receiptsDest.path) {
-                    try fileManager.removeItem(at: receiptsDest)
-                }
-                try fileManager.copyItem(at: receiptsSource, to: receiptsDest)
-                receiptsIncluded = true
-            } else if fileManager.fileExists(atPath: receiptsDest.path) {
-                try fileManager.removeItem(at: receiptsDest)
-            }
-
-            // 写入备份元信息
-            let meta = BackupMeta(
-                timestamp: Date(),
-                deviceName: UIDevice.current.name,
-                appVersion: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0",
-                fileCount: copiedFiles.count + (receiptsIncluded ? 1 : 0),
-                includedFiles: copiedFiles,
-                receiptsIncluded: receiptsIncluded
-            )
-            let metaData = try JSONEncoder().encode(meta)
-            try metaData.write(to: iCloudDir.appendingPathComponent("backup_meta.json"))
 
             lastBackupTime = Date()
             saveLastBackupTime()
-            print("✅ iCloud 备份完成: \(Date())")
+
+            // 3. 清理过期备份
+            pruneOldBackups()
+
+            // 4. 刷新列表
+            refreshAvailableBackups()
+
+            print("[BackupService] backup completed: \(dirName)")
         } catch {
             backupError = error.localizedDescription
-            print("❌ iCloud 备份失败: \(error)")
+            print("[BackupService] backup failed: \(error)")
         }
 
         isBackingUp = false
     }
 
-    // MARK: - 从 iCloud Drive 恢复
+    /// 将当前数据文件复制到指定目录（原子性）
+    private func copyDataFiles(to destDir: URL) throws {
+        SecureStorageHelper.ensureDirectory(
+            at: destDir,
+            fileManager: fileManager,
+            excludeFromBackup: destDir.path.contains("HotelBackupArchive")
+        )
 
-    func restoreFromICloud() async -> Bool {
-        backupError = nil
-        guard let iCloudDir = iCloudBackupDir else {
-            backupError = "iCloud Drive 不可用"
-            return false
+        var copiedFiles: [String] = []
+        for fileName in persistentBackupFiles {
+            let source = localDataDir.appendingPathComponent(fileName)
+            let dest = destDir.appendingPathComponent(fileName)
+
+            guard fileManager.fileExists(atPath: source.path) else {
+                if fileManager.fileExists(atPath: dest.path) {
+                    try fileManager.removeItem(at: dest)
+                }
+                continue
+            }
+
+            // Atomic: copy to temp first, then replace
+            let tempDest = destDir.appendingPathComponent(fileName + ".tmp")
+            if fileManager.fileExists(atPath: tempDest.path) {
+                try fileManager.removeItem(at: tempDest)
+            }
+            try fileManager.copyItem(at: source, to: tempDest)
+            if fileManager.fileExists(atPath: dest.path) {
+                try fileManager.removeItem(at: dest)
+            }
+            try fileManager.moveItem(at: tempDest, to: dest)
+            copiedFiles.append(fileName)
         }
 
-        let metaURL = iCloudDir.appendingPathComponent("backup_meta.json")
-        guard fileManager.fileExists(atPath: metaURL.path) else {
-            backupError = "iCloud 中没有找到备份数据"
+        // 小票照片
+        let receiptsSource = localDataDir.appendingPathComponent("receipts")
+        let receiptsDest = destDir.appendingPathComponent("receipts")
+        var receiptsIncluded = false
+        if fileManager.fileExists(atPath: receiptsSource.path) {
+            if fileManager.fileExists(atPath: receiptsDest.path) {
+                try fileManager.removeItem(at: receiptsDest)
+            }
+            try fileManager.copyItem(at: receiptsSource, to: receiptsDest)
+            receiptsIncluded = true
+        } else if fileManager.fileExists(atPath: receiptsDest.path) {
+            try fileManager.removeItem(at: receiptsDest)
+        }
+
+        // 写入备份元信息
+        let meta = BackupMeta(
+            timestamp: Date(),
+            deviceName: UIDevice.current.name,
+            appVersion: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0",
+            fileCount: copiedFiles.count + (receiptsIncluded ? 1 : 0),
+            includedFiles: copiedFiles,
+            receiptsIncluded: receiptsIncluded
+        )
+        let metaData = try JSONEncoder().encode(meta)
+        try SecureStorageHelper.write(
+            metaData,
+            to: destDir.appendingPathComponent("backup_meta.json"),
+            fileManager: fileManager,
+            excludeFromBackup: destDir.path.contains("HotelBackupArchive")
+        )
+    }
+
+    // MARK: - 清理过期备份（保留最近 7 天）
+
+    private func pruneOldBackups() {
+        pruneDir(localBackupArchiveDir)
+        if let iCloudDir = iCloudBackupDir {
+            pruneDir(iCloudDir)
+        }
+    }
+
+    private func pruneDir(_ baseDir: URL) {
+        guard let entries = try? fileManager.contentsOfDirectory(atPath: baseDir.path) else { return }
+        let dailyDirs = entries
+            .filter { $0.hasPrefix("daily_") }
+            .compactMap { name -> (String, Date)? in
+                guard let date = dateFromDirName(name) else { return nil }
+                return (name, date)
+            }
+            .sorted { $0.1 > $1.1 } // newest first
+
+        // 保留最新的 maxDailyBackups 个
+        let toDelete = dailyDirs.dropFirst(Self.maxDailyBackups)
+        for (name, _) in toDelete {
+            let path = baseDir.appendingPathComponent(name)
+            try? fileManager.removeItem(at: path)
+        }
+    }
+
+    // MARK: - 列出可用备份
+
+    func refreshAvailableBackups() {
+        var snapshots: [String: BackupSnapshot] = [:]
+
+        // 扫描本地备份
+        scanBackupDir(localBackupArchiveDir, isCloud: false, into: &snapshots)
+
+        // 扫描 iCloud 备份
+        if let iCloudDir = iCloudBackupDir {
+            scanBackupDir(iCloudDir, isCloud: true, into: &snapshots)
+
+            // 兼容旧版：检查根目录是否有 backup_meta.json（非版本化备份）
+            let legacyMeta = iCloudDir.appendingPathComponent("backup_meta.json")
+            if fileManager.fileExists(atPath: legacyMeta.path),
+               !snapshots.values.contains(where: { $0.id.hasPrefix("daily_") }),
+               let data = try? Data(contentsOf: legacyMeta),
+               let meta = try? JSONDecoder().decode(BackupMeta.self, from: data) {
+                let legacyId = "legacy_icloud"
+                snapshots[legacyId] = BackupSnapshot(
+                    id: legacyId,
+                    date: meta.timestamp,
+                    meta: meta,
+                    url: iCloudDir,
+                    isCloud: true,
+                    sizeBytes: directorySize(iCloudDir)
+                )
+            }
+        }
+
+        availableBackups = snapshots.values.sorted()
+    }
+
+    private func scanBackupDir(_ baseDir: URL, isCloud: Bool, into snapshots: inout [String: BackupSnapshot]) {
+        guard let entries = try? fileManager.contentsOfDirectory(atPath: baseDir.path) else { return }
+        for name in entries where name.hasPrefix("daily_") {
+            guard let date = dateFromDirName(name) else { continue }
+            let dirURL = baseDir.appendingPathComponent(name)
+            let metaURL = dirURL.appendingPathComponent("backup_meta.json")
+            let meta: BackupMeta? = {
+                guard let data = try? Data(contentsOf: metaURL) else { return nil }
+                return try? JSONDecoder().decode(BackupMeta.self, from: data)
+            }()
+
+            let key = name
+            // 优先展示 iCloud 版本（如果 key 已存在且是 cloud 则不覆盖）
+            if let existing = snapshots[key], existing.isCloud && !isCloud {
+                continue
+            }
+            snapshots[key] = BackupSnapshot(
+                id: name,
+                date: date,
+                meta: meta,
+                url: dirURL,
+                isCloud: isCloud,
+                sizeBytes: directorySize(dirURL)
+            )
+        }
+    }
+
+    private func directorySize(_ url: URL) -> Int64 {
+        guard let enumerator = fileManager.enumerator(at: url, includingPropertiesForKeys: [.fileSizeKey]) else { return 0 }
+        var total: Int64 = 0
+        for case let fileURL as URL in enumerator {
+            if let size = try? fileURL.resourceValues(forKeys: [.fileSizeKey]).fileSize {
+                total += Int64(size)
+            }
+        }
+        return total
+    }
+
+    // MARK: - 从指定备份恢复
+
+    func restoreFromBackup(_ snapshot: BackupSnapshot) async -> Bool {
+        backupError = nil
+        let sourceDir = snapshot.url
+
+        // Verify source has data
+        let hasAnyFile = persistentBackupFiles.contains { name in
+            fileManager.fileExists(atPath: sourceDir.appendingPathComponent(name).path)
+        }
+        guard hasAnyFile else {
+            backupError = "备份目录中没有找到数据文件"
             return false
         }
 
         // Backup local data to temp directory before restoring, for rollback on failure
         let tempBackupDir = fileManager.temporaryDirectory.appendingPathComponent("restore_backup_\(UUID().uuidString)")
         do {
-            // 确保本地目录存在
             try fileManager.createDirectory(at: localDataDir, withIntermediateDirectories: true)
 
             // Backup current local files to temp
@@ -170,8 +373,9 @@ final class BackupService: ObservableObject {
                 }
             }
 
+            // Copy backup files to local data dir
             for fileName in persistentBackupFiles {
-                let source = iCloudDir.appendingPathComponent(fileName)
+                let source = sourceDir.appendingPathComponent(fileName)
                 let dest = localDataDir.appendingPathComponent(fileName)
 
                 guard fileManager.fileExists(atPath: source.path) else {
@@ -188,7 +392,7 @@ final class BackupService: ObservableObject {
             }
 
             // 恢复小票照片
-            let receiptsSource = iCloudDir.appendingPathComponent("receipts")
+            let receiptsSource = sourceDir.appendingPathComponent("receipts")
             let receiptsDest = localDataDir.appendingPathComponent("receipts")
             if fileManager.fileExists(atPath: receiptsSource.path) {
                 if fileManager.fileExists(atPath: receiptsDest.path) {
@@ -204,7 +408,7 @@ final class BackupService: ObservableObject {
 
             lastRestoreTime = Date()
             saveLastRestoreTime()
-            print("✅ 从 iCloud 恢复完成")
+            print("[BackupService] restore completed from \(snapshot.id)")
             return true
         } catch {
             // Rollback: restore local files from temp backup
@@ -224,17 +428,35 @@ final class BackupService: ObservableObject {
         }
     }
 
-    // MARK: - 手动导出（生成 zip/json 通过分享菜单）
+    /// 兼容旧接口：从 iCloud 最新备份恢复
+    func restoreFromICloud() async -> Bool {
+        // 先刷新列表
+        refreshAvailableBackups()
+        // 找最新的 iCloud 备份
+        if let newest = availableBackups.first(where: { $0.isCloud }) {
+            return await restoreFromBackup(newest)
+        }
+        backupError = "iCloud 中没有找到备份数据"
+        return false
+    }
+
+    // MARK: - 手动导出（生成目录通过分享菜单）
 
     func exportBackup() throws -> URL {
         let tempDir = fileManager.temporaryDirectory
         let exportDir = tempDir.appendingPathComponent("HotelBackup_\(formatDate(Date()))")
-        try fileManager.createDirectory(at: exportDir, withIntermediateDirectories: true)
+        if fileManager.fileExists(atPath: exportDir.path) {
+            try fileManager.removeItem(at: exportDir)
+        }
+        SecureStorageHelper.ensureDirectory(at: exportDir, excludeFromBackup: true)
         var copiedFiles: [String] = []
         for fileName in persistentBackupFiles {
             let source = localDataDir.appendingPathComponent(fileName)
             guard fileManager.fileExists(atPath: source.path) else { continue }
-            try fileManager.copyItem(at: source, to: exportDir.appendingPathComponent(fileName))
+            let destination = exportDir.appendingPathComponent(fileName)
+            try fileManager.copyItem(at: source, to: destination)
+            try? fileManager.setAttributes([.protectionKey: FileProtectionType.completeUntilFirstUserAuthentication], ofItemAtPath: destination.path)
+            try? SecureStorageHelper.setExcludedFromBackup(for: destination)
             copiedFiles.append(fileName)
         }
 
@@ -243,6 +465,8 @@ final class BackupService: ObservableObject {
         let receiptsIncluded = fileManager.fileExists(atPath: receiptsSource.path)
         if receiptsIncluded {
             try fileManager.copyItem(at: receiptsSource, to: receiptsDest)
+            try? fileManager.setAttributes([.protectionKey: FileProtectionType.completeUntilFirstUserAuthentication], ofItemAtPath: receiptsDest.path)
+            try? SecureStorageHelper.setExcludedFromBackup(for: receiptsDest)
         }
 
         let readme = """
@@ -250,11 +474,15 @@ final class BackupService: ObservableObject {
 
         1. 请在目标设备登录与原设备相同的 Apple ID。
         2. 在系统设置中开启 iCloud Drive 与“密码与钥匙串”。
-        3. 安装应用后，以管理员身份进入“设置 > 备份与恢复”。
+        3. 安装应用后，以管理员身份进入"设置 > 备份与恢复"。
         4. 如需从 iCloud 恢复，请先确认最近备份时间，再执行恢复。
         5. 如果提示凭据或加密密钥异常，请优先检查 Apple ID、iCloud Drive 和钥匙串是否同步完成。
         """
-        try readme.write(to: exportDir.appendingPathComponent("README_恢复说明.txt"), atomically: true, encoding: .utf8)
+        try SecureStorageHelper.write(
+            Data(readme.utf8),
+            to: exportDir.appendingPathComponent("README_恢复说明.txt"),
+            excludeFromBackup: true
+        )
 
         // 写元信息
         let meta = BackupMeta(
@@ -265,8 +493,25 @@ final class BackupService: ObservableObject {
             includedFiles: copiedFiles,
             receiptsIncluded: receiptsIncluded
         )
-        try JSONEncoder().encode(meta).write(to: exportDir.appendingPathComponent("backup_meta.json"))
+        try SecureStorageHelper.write(
+            try JSONEncoder().encode(meta),
+            to: exportDir.appendingPathComponent("backup_meta.json"),
+            excludeFromBackup: true
+        )
 
+        return exportDir
+    }
+
+    /// 导出指定备份快照（通过 Share Sheet）
+    func exportSnapshot(_ snapshot: BackupSnapshot) throws -> URL {
+        let tempDir = fileManager.temporaryDirectory
+        let exportDir = tempDir.appendingPathComponent("HotelBackup_\(snapshot.id)")
+        if fileManager.fileExists(atPath: exportDir.path) {
+            try fileManager.removeItem(at: exportDir)
+        }
+        try fileManager.copyItem(at: snapshot.url, to: exportDir)
+        try? fileManager.setAttributes([.protectionKey: FileProtectionType.completeUntilFirstUserAuthentication], ofItemAtPath: exportDir.path)
+        try? SecureStorageHelper.setExcludedFromBackup(for: exportDir)
         return exportDir
     }
 
@@ -281,7 +526,7 @@ final class BackupService: ObservableObject {
         if fileManager.fileExists(atPath: exportDir.path) {
             try fileManager.removeItem(at: exportDir)
         }
-        try fileManager.createDirectory(at: exportDir, withIntermediateDirectories: true)
+        SecureStorageHelper.ensureDirectory(at: exportDir, excludeFromBackup: true)
 
         let bundle = buildAIAnalysisBundle(
             rooms: rooms,
@@ -295,9 +540,10 @@ final class BackupService: ObservableObject {
         encoder.dateEncodingStrategy = .iso8601
         encoder.keyEncodingStrategy = .convertToSnakeCase
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-        try encoder.encode(bundle).write(
+        try SecureStorageHelper.write(
+            try encoder.encode(bundle),
             to: exportDir.appendingPathComponent("hotel_data_bundle.json"),
-            options: .atomic
+            excludeFromBackup: true
         )
 
         try writeDataPackageReadme(to: exportDir)
@@ -313,6 +559,11 @@ final class BackupService: ObservableObject {
     }
 
     func fetchICloudBackupMeta() -> BackupMeta? {
+        // 优先查找版本化备份中最新的
+        if let newest = availableBackups.first(where: { $0.isCloud }), let meta = newest.meta {
+            return meta
+        }
+        // 兼容旧版
         guard let dir = iCloudBackupDir else { return nil }
         let metaURL = dir.appendingPathComponent("backup_meta.json")
         guard let data = try? Data(contentsOf: metaURL),
@@ -351,6 +602,14 @@ final class BackupService: ObservableObject {
 
         items.append(
             BackupHealthItem(
+                title: "备份保留",
+                detail: "自动保留最近 \(Self.maxDailyBackups) 天的每日备份，更早的自动清理",
+                state: .info
+            )
+        )
+
+        items.append(
+            BackupHealthItem(
                 title: "员工账号与密钥",
                 detail: "备份已包含 staff.json；员工密码哈希和敏感数据密钥依赖同一 Apple ID 下的 iCloud 钥匙串同步恢复",
                 state: .info
@@ -361,7 +620,15 @@ final class BackupService: ObservableObject {
             BackupHealthItem(
                 title: "恢复前提",
                 detail: "新设备恢复前，请确认使用同一 Apple ID，并开启 iCloud Drive 与“密码与钥匙串”",
-                state: .info
+                state: .warning
+            )
+        )
+
+        items.append(
+            BackupHealthItem(
+                title: "部署约束",
+                detail: "当前版本仅适合同一 Apple ID 下的单酒店部署；若要支持多 Apple ID 并发协作，需要先升级同步架构",
+                state: .warning
             )
         )
 
@@ -377,6 +644,7 @@ final class BackupService: ObservableObject {
 
         return items
     }
+
 
     // MARK: - AI 分析导出
 
@@ -414,7 +682,7 @@ final class BackupService: ObservableObject {
                     matchedOtaBookingId: match.bookingID,
                     platformOrderId: match.platformOrderID,
                     guestId: guest?.id ?? reservation.guestID,
-                    guestName: guest?.name ?? reservation.guest?.name ?? "未知客人",
+                    guestName: maskName(guest?.name ?? reservation.guest?.name ?? "未知客人"),
                     guestPhoneMasked: maskPhone(guest?.phone ?? reservation.guest?.phone ?? ""),
                     guestIdType: guest?.idType.rawValue ?? reservation.guest?.idType.rawValue ?? "",
                     guestIdNumberMasked: maskIdentityNumber(guest?.idNumber ?? reservation.guest?.idNumber ?? ""),
@@ -442,7 +710,7 @@ final class BackupService: ObservableObject {
                 let guestReservations = reservationRecords.filter { $0.guestId == guest.id }
                 return AIGuestRecord(
                     guestId: guest.id,
-                    name: guest.name,
+                    name: maskName(guest.name),
                     idType: guest.idType.rawValue,
                     idNumberMasked: maskIdentityNumber(guest.idNumber),
                     phoneMasked: maskPhone(guest.phone),
@@ -497,7 +765,7 @@ final class BackupService: ObservableObject {
                 platformDisplayName: booking.platformDisplayName,
                 platformOrderId: booking.platformOrderID,
                 status: booking.status.rawValue,
-                guestName: booking.guestName,
+                guestName: maskName(booking.guestName),
                 guestPhoneMasked: maskPhone(booking.guestPhone),
                 roomType: booking.roomType.rawValue,
                 assignedRoomId: booking.assignedRoomID,
@@ -825,6 +1093,16 @@ final class BackupService: ObservableObject {
         ).day ?? .max)
     }
 
+    private func maskName(_ value: String) -> String {
+        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return "" }
+        guard trimmed.count > 1 else { return trimmed }
+        if trimmed.count == 2 {
+            return "\(trimmed.prefix(1))*"
+        }
+        return "\(trimmed.prefix(1))\(String(repeating: "*", count: max(1, trimmed.count - 2)))\(trimmed.suffix(1))"
+    }
+
     private func maskPhone(_ value: String) -> String {
         let digits = digitsOnly(value)
         guard digits.count >= 7 else { return value }
@@ -846,16 +1124,16 @@ final class BackupService: ObservableObject {
         1. hotel_data_bundle.json
            单个 JSON 文件，包含房间、客人、入住、押金、OTA 订单、来源归因和收益汇总。
         2. reservations_flat.csv
-           扁平化入住明细，适合直接上传给 ChatGPT、Gemini、Excel 或表格工具。
+           扁平化入住明细，适合内部数据分析、表格处理或授权报表工具。
         3. rooms_overview.csv / guests_overview.csv / ota_bookings.csv / source_revenue_summary.csv / deposits.csv
            分主题拆开的 CSV，适合单独做房间、客人、来源和押金分析。
-        4. 为了降低隐私风险，手机号和证件号已经做脱敏处理；客人姓名会保留，方便识别回头客和订单归因。
+        4. 为了降低隐私风险，手机号、证件号和客人姓名均会做脱敏处理。
         5. 入住来源是根据 OTA 订单、房号、入住日期、姓名和手机号做匹配；无法匹配时默认标记为“前台入住”。
         """
-        try content.write(
+        try SecureStorageHelper.write(
+            Data(content.utf8),
             to: exportDir.appendingPathComponent("README_数据说明.txt"),
-            atomically: true,
-            encoding: .utf8
+            excludeFromBackup: true
         )
     }
 
@@ -1064,7 +1342,11 @@ final class BackupService: ObservableObject {
         var lines = [headers.map(csvEscaped).joined(separator: ",")]
         lines.append(contentsOf: rows.map { $0.map(csvEscaped).joined(separator: ",") })
         let content = lines.joined(separator: "\n")
-        try content.write(to: directory.appendingPathComponent(fileName), atomically: true, encoding: .utf8)
+        try SecureStorageHelper.write(
+            Data(content.utf8),
+            to: directory.appendingPathComponent(fileName),
+            excludeFromBackup: true
+        )
     }
 
     private func csvEscaped(_ value: String) -> String {

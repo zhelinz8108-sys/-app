@@ -5,6 +5,7 @@ struct GuestFormView: View {
     @Binding var idType: IDType
     @Binding var idNumber: String
     @Binding var phone: String
+    @Binding var email: String
     @Binding var notes: String
     @Binding var numberOfGuests: Int
 
@@ -45,6 +46,12 @@ struct GuestFormView: View {
             TextField("手机号码 *", text: $phone)
                 .textContentType(.telephoneNumber)
                 .keyboardType(.phonePad)
+
+            TextField("邮箱（选填）", text: $email)
+                .textContentType(.emailAddress)
+                .keyboardType(.emailAddress)
+                .autocapitalization(.none)
+                .autocorrectionDisabled()
 
             Stepper("入住人数: \(numberOfGuests)", value: $numberOfGuests, in: 1...10)
 

@@ -5,11 +5,12 @@ import Foundation
 final class StaffService: ObservableObject {
     static let shared = StaffService()
     private static let bootstrapUsername = "admin"
-    private static let bootstrapPassword = "8888"
+    private static let legacyBootstrapPassword = "8888"
 
     /// 当前登录的员工
     @Published var currentStaff: Staff?
     @Published private(set) var credentialIntegrityIssue: String?
+    @Published private(set) var requiresInitialManagerSetup = false
 
     private let fileManager = FileManager.default
     private let filePath: URL
@@ -29,7 +30,7 @@ final class StaffService: ObservableObject {
     var currentName: String { currentStaff?.name ?? "未登录" }
     var requiresMandatoryPasswordChange: Bool {
         guard let currentStaff, currentStaff.isActive else { return false }
-        return usesDefaultPassword(currentStaff)
+        return usesLegacyBootstrapPassword(currentStaff)
     }
     var mandatoryPasswordChangeMessage: String {
         guard let currentStaff else {
@@ -41,26 +42,18 @@ final class StaffService: ObservableObject {
         return "检测到当前账号仍在使用默认密码。为了保护前台数据，请先完成改密。"
     }
     var shouldShowBootstrapHint: Bool {
-        guard credentialIntegrityIssue == nil,
-              staffList.count == 1,
-              let staff = staffList.first,
-              staff.username == Self.bootstrapUsername,
-              staff.role == .manager,
-              staff.isActive else {
-            return false
-        }
-        return usesDefaultPassword(staff)
+        requiresInitialManagerSetup
     }
 
     private init() {
         let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
         let dir = docs.appendingPathComponent("HotelLocalData")
-        try? fileManager.createDirectory(at: dir, withIntermediateDirectories: true)
+        SecureStorageHelper.ensureDirectory(at: dir, excludeFromBackup: true)
         filePath = dir.appendingPathComponent("staff.json")
         loginAttemptsPath = dir.appendingPathComponent("staff_login_attempts.json")
         loadStaff()
         loadLoginAttempts()
-        ensureDefaultAdmin()
+        refreshSetupState()
     }
 
     // MARK: - 登录/登出
@@ -119,6 +112,44 @@ final class StaffService: ObservableObject {
     func logout() {
         currentStaff = nil
         AppSettings.shared.isManagerMode = false
+    }
+
+    @discardableResult
+    func bootstrapInitialManager(
+        name: String,
+        username: String,
+        password: String,
+        phone: String = ""
+    ) -> String? {
+        guard requiresInitialManagerSetup else {
+            return "系统已存在管理员账号"
+        }
+
+        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedUsername = username.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedPhone = phone.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard !trimmedName.isEmpty else { return "姓名不能为空" }
+        guard !trimmedUsername.isEmpty else { return "用户名不能为空" }
+        if isUsernameTaken(trimmedUsername) {
+            return "用户名 \(trimmedUsername) 已被使用"
+        }
+        if let error = passwordPolicyError(for: password) {
+            return error
+        }
+
+        let manager = Staff(
+            name: trimmedName,
+            username: trimmedUsername,
+            password: password,
+            role: .manager,
+            phone: trimmedPhone
+        )
+        staffList.append(manager)
+        persist()
+        currentStaff = manager
+        AppSettings.shared.isManagerMode = true
+        return nil
     }
 
     // MARK: - 员工 CRUD
@@ -195,7 +226,7 @@ final class StaffService: ObservableObject {
         guard trimmed.count >= 8 else {
             return "密码至少需要 8 位"
         }
-        guard trimmed != Self.bootstrapPassword else {
+        guard trimmed != Self.legacyBootstrapPassword else {
             return "不能继续使用默认密码 8888"
         }
 
@@ -231,7 +262,7 @@ final class StaffService: ObservableObject {
         }
         let encoder = JSONEncoder()
         guard let data = try? encoder.encode(codableList) else { return }
-        try? data.write(to: filePath, options: .atomic)
+        try? SecureStorageHelper.write(data, to: filePath, excludeFromBackup: true)
 
         let currentIDs = Set(staffList.map(\.id))
         for removedID in knownPasswordEntryIDs.subtracting(currentIDs) {
@@ -245,13 +276,13 @@ final class StaffService: ObservableObject {
             KeychainHelper.save(key: "staff_pw_\(staff.id)", value: staff.passwordHash, synchronizable: true)
         }
         knownPasswordEntryIDs = currentIDs
-        refreshCredentialIntegrityIssue()
+        refreshSetupState()
     }
 
     private func loadStaff() {
         let decoder = JSONDecoder()
         guard let data = try? Data(contentsOf: filePath) else {
-            refreshCredentialIntegrityIssue()
+            refreshSetupState()
             return
         }
 
@@ -263,7 +294,7 @@ final class StaffService: ObservableObject {
                              existingHash: hash, role: c.role, phone: c.phone, isActive: c.isActive)
             }
             knownPasswordEntryIDs = Set(staffList.map(\.id))
-            refreshCredentialIntegrityIssue()
+            refreshSetupState()
             return
         }
 
@@ -275,14 +306,14 @@ final class StaffService: ObservableObject {
             return
         }
 
-        refreshCredentialIntegrityIssue()
+        refreshSetupState()
     }
 
     private func persistLoginAttempts() {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         guard let data = try? encoder.encode(loginAttempts) else { return }
-        try? data.write(to: loginAttemptsPath, options: .atomic)
+        try? SecureStorageHelper.write(data, to: loginAttemptsPath, excludeFromBackup: true)
     }
 
     private func loadLoginAttempts() {
@@ -324,8 +355,8 @@ final class StaffService: ObservableObject {
         username.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
     }
 
-    private func usesDefaultPassword(_ staff: Staff) -> Bool {
-        staff.verifyPassword(Self.bootstrapPassword)
+    private func usesLegacyBootstrapPassword(_ staff: Staff) -> Bool {
+        staff.verifyPassword(Self.legacyBootstrapPassword)
     }
 
     private func readStoredPasswordHash(for staffID: String) -> String {
@@ -350,22 +381,13 @@ final class StaffService: ObservableObject {
         credentialIntegrityIssue = nil
     }
 
-    /// 确保至少有一个管理员账号，且密码哈希可用
-    private func ensureDefaultAdmin() {
+    private func refreshSetupState() {
         let hasManager = staffList.contains { $0.role == .manager }
-        if !hasManager {
-            let admin = Staff(
-                name: "管理员",
-                username: Self.bootstrapUsername,
-                password: Self.bootstrapPassword,
-                role: .manager,
-                phone: ""
-            )
-            staffList.append(admin)
-            persist()
-            return
+        requiresInitialManagerSetup = !hasManager
+        if requiresInitialManagerSetup {
+            currentStaff = nil
+            AppSettings.shared.isManagerMode = false
         }
-
         refreshCredentialIntegrityIssue()
     }
 
@@ -397,7 +419,7 @@ final class StaffService: ObservableObject {
         credentialIntegrityIssue = nil
         loadStaff()
         loadLoginAttempts()
-        ensureDefaultAdmin()
+        refreshSetupState()
     }
 #endif
 }

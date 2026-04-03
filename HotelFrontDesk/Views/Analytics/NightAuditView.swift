@@ -32,6 +32,23 @@ struct NightAuditView: View {
                 }
                 .disabled(isLoading)
 
+                // 日结对账入口
+                NavigationLink {
+                    DailyReconciliationView()
+                } label: {
+                    HStack {
+                        Spacer()
+                        Image(systemName: "checkmark.seal.fill")
+                        Text("日结对账")
+                            .fontWeight(.bold)
+                        Spacer()
+                    }
+                    .padding()
+                    .background(Color.green.opacity(0.85))
+                    .foregroundStyle(.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 14))
+                }
+
                 if let error = errorMessage {
                     Text(error).foregroundStyle(.red).font(.caption)
                 }
@@ -262,6 +279,8 @@ struct NightAuditView: View {
         errorMessage = nil
         do {
             auditResult = try await auditService.performAudit()
+            // 夜审成功后自动触发一次备份
+            await BackupService.shared.performNightAuditBackup()
         } catch {
             errorMessage = "夜审执行失败: \(ErrorHelper.userMessage(error))"
         }

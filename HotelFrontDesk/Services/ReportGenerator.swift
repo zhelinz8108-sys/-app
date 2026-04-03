@@ -465,7 +465,7 @@ enum ReportGenerator {
 
         let tempDir = FileManager.default.temporaryDirectory
         let url = tempDir.appendingPathComponent("\(fileName).pdf")
-        try? data.write(to: url)
+        try? SecureStorageHelper.write(data, to: url, excludeFromBackup: true)
         return url
     }
 

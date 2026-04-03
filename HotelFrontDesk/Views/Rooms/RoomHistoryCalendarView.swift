@@ -1,4 +1,5 @@
 import SwiftUI
+import MessageUI
 
 // MARK: - 历史入住日历视图
 struct RoomHistoryCalendarView: View {
@@ -10,6 +11,12 @@ struct RoomHistoryCalendarView: View {
     @State private var showGuestPopup = false
     @State private var popoverAnchor: CGPoint = .zero
     @State private var cachedDateReservationMap: [String: Reservation] = [:]
+    @State private var invoiceURL: URL?
+    @State private var showShareSheet = false
+    @State private var isGeneratingInvoice = false
+    @State private var showMailComposer = false
+    @State private var showMailUnavailableAlert = false
+    @State private var mailReservation: Reservation?
 
     private let calendar = Calendar.current
     private let weekdaySymbols = ["日", "一", "二", "三", "四", "五", "六"]
@@ -130,6 +137,44 @@ struct RoomHistoryCalendarView: View {
         .onAppear { cachedDateReservationMap = buildDateReservationMap() }
         .onChange(of: historyRecords.map(\.id)) {
             cachedDateReservationMap = buildDateReservationMap()
+        }
+        .sheet(isPresented: $showShareSheet) {
+            if let url = invoiceURL {
+                ShareSheet(items: [url])
+            }
+        }
+        .sheet(isPresented: $showMailComposer) {
+            if let url = invoiceURL, let res = mailReservation {
+                let hotelName = UserDefaults.standard.string(forKey: "hotelName") ?? "酒店"
+                let roomNumber = res.room?.roomNumber ?? room.roomNumber
+                MailComposerView(
+                    subject: "【\(hotelName)】住宿收据 - \(roomNumber)房",
+                    body: """
+                    尊敬的\(res.guest?.name ?? "客人")，您好！
+
+                    感谢您选择入住\(hotelName)，以下是您的住宿收据，请查收。
+
+                    房间号：\(roomNumber)
+                    入住日期：\(res.checkInDate.chineseDate)
+                    退房日期：\((res.actualCheckOut ?? res.expectedCheckOut).chineseDate)
+
+                    如有任何疑问，请随时联系我们。
+                    祝您生活愉快！
+
+                    \(hotelName)
+                    """,
+                    recipients: res.guest?.email.map { [$0] } ?? [],
+                    attachmentURL: url,
+                    attachmentMimeType: "application/pdf"
+                ) { _ in
+                    showMailComposer = false
+                }
+            }
+        }
+        .alert("无法发送邮件", isPresented: $showMailUnavailableAlert) {
+            Button("确定", role: .cancel) {}
+        } message: {
+            Text("此设备未配置邮件账户，请在系统设置中添加邮件账户后重试。")
         }
     }
 
@@ -261,11 +306,90 @@ struct RoomHistoryCalendarView: View {
             .padding(.vertical, 10)
             .background(Color(.tertiarySystemGroupedBackground))
             .clipShape(RoundedRectangle(cornerRadius: 10))
+
+            // 查看收据 + 发送邮件按钮
+            if !reservation.isActive {
+                HStack(spacing: 10) {
+                    Button {
+                        generateHistoryInvoice(reservation: reservation)
+                    } label: {
+                        HStack {
+                            Spacer()
+                            if isGeneratingInvoice {
+                                ProgressView()
+                                    .padding(.trailing, 6)
+                            }
+                            Label("查看收据", systemImage: "doc.text")
+                                .font(.subheadline)
+                                .fontWeight(.medium)
+                            Spacer()
+                        }
+                        .padding(.vertical, 10)
+                        .background(Color.blue.opacity(0.12))
+                        .foregroundStyle(.blue)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                    .disabled(isGeneratingInvoice)
+
+                    Button {
+                        sendHistoryInvoiceEmail(reservation: reservation)
+                    } label: {
+                        HStack {
+                            Spacer()
+                            Label("发送到邮箱", systemImage: "envelope")
+                                .font(.subheadline)
+                                .fontWeight(.medium)
+                            Spacer()
+                        }
+                        .padding(.vertical, 10)
+                        .background(Color.green.opacity(0.12))
+                        .foregroundStyle(.green)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                    .disabled(isGeneratingInvoice)
+                }
+                .padding(.top, 10)
+            }
         }
         .padding()
         .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: 14))
         .shadow(color: .black.opacity(0.1), radius: 8, y: 2)
+    }
+
+    // MARK: - 生成历史收据
+    private func generateHistoryInvoice(reservation: Reservation) {
+        isGeneratingInvoice = true
+        Task {
+            do {
+                let url = try await InvoiceGenerator.generateInvoiceForHistory(reservation: reservation)
+                invoiceURL = url
+                showShareSheet = true
+            } catch {
+                print("生成收据失败: \(error)")
+            }
+            isGeneratingInvoice = false
+        }
+    }
+
+    // MARK: - 发送历史收据邮件
+    private func sendHistoryInvoiceEmail(reservation: Reservation) {
+        guard MFMailComposeViewController.canSendMail() else {
+            showMailUnavailableAlert = true
+            return
+        }
+        isGeneratingInvoice = true
+        Task {
+            do {
+                let url = try await InvoiceGenerator.generateInvoiceForHistory(reservation: reservation)
+                invoiceURL = url
+                mailReservation = reservation
+                showMailComposer = true
+            } catch {
+                print("生成收据失败: \(error)")
+            }
+            isGeneratingInvoice = false
+        }
     }
 
     private func popupRow(icon: String, label: String, value: String) -> some View {

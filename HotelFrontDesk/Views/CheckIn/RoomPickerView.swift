@@ -3,12 +3,13 @@ import SwiftUI
 struct RoomPickerView: View {
     let vacantRooms: [Room]
     @Binding var selectedRoom: Room?
-    var onSelectRoom: ((Room) -> Bool)? // 返回 false 表示锁定失败
+    var onSelectRoom: ((Room) async -> Bool)? // 返回 false 表示锁定失败（异步）
 
     @ObservedObject private var lockService = RoomLockService.shared
     @State private var showPicker = false
     @State private var selectedType: RoomType? = nil
     @State private var lockError: String?
+    @State private var isLocking = false
 
     // 按户型筛选
     private var filteredRooms: [Room] {
@@ -91,6 +92,20 @@ struct RoomPickerView: View {
                     .background(Color.orange.opacity(0.1))
                 }
 
+                // 正在锁定提示
+                if isLocking {
+                    HStack(spacing: 8) {
+                        ProgressView()
+                            .controlSize(.small)
+                        Text("正在锁定房间...")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding(10)
+                    .frame(maxWidth: .infinity)
+                    .background(Color(.systemGroupedBackground))
+                }
+
                 // 户型筛选标签
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 10) {
@@ -118,6 +133,7 @@ struct RoomPickerView: View {
                                     roomRow(room)
                                         .contentShape(Rectangle())
                                         .onTapGesture {
+                                            guard !isLocking else { return }
                                             handleRoomTap(room)
                                         }
                                 }
@@ -125,6 +141,7 @@ struct RoomPickerView: View {
                         }
                     }
                     .listStyle(.insetGrouped)
+                    .disabled(isLocking)
                 }
             }
             .navigationTitle("选择房间")
@@ -132,6 +149,7 @@ struct RoomPickerView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("取消") { showPicker = false }
+                        .disabled(isLocking)
                 }
             }
         }
@@ -140,11 +158,16 @@ struct RoomPickerView: View {
     private func handleRoomTap(_ room: Room) {
         lockError = nil
         if let onSelect = onSelectRoom {
-            if onSelect(room) {
-                showPicker = false
-            } else {
-                let info = lockService.lockInfo(roomID: room.id)
-                lockError = "\(room.roomNumber)房正在被 \(info?.staffName ?? "其他人") 办理，请选择其他房间"
+            isLocking = true
+            Task {
+                let success = await onSelect(room)
+                isLocking = false
+                if success {
+                    showPicker = false
+                } else {
+                    let info = lockService.lockInfo(roomID: room.id)
+                    lockError = "\(room.roomNumber)房正在被 \(info?.staffName ?? "其他人") 办理，请选择其他房间"
+                }
             }
         } else {
             selectedRoom = room

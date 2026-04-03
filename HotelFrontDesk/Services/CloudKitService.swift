@@ -1,6 +1,26 @@
 import CloudKit
 import Foundation
 
+enum CloudKitMutationError: LocalizedError {
+    case readOnlyProtection
+    case roomNotVacant(roomNumber: String, status: String)
+    case roomHasReservations(roomNumber: String)
+    case roomAssignedToActiveBooking(roomNumber: String)
+
+    var errorDescription: String? {
+        switch self {
+        case .readOnlyProtection:
+            return "云同步当前不可用，系统已进入只读保护模式以防多设备数据冲突。请恢复 iCloud/网络后再继续办理业务。"
+        case .roomNotVacant(let roomNumber, let status):
+            return "\(roomNumber) 房当前状态为\(status)，只能删除空房"
+        case .roomHasReservations(let roomNumber):
+            return "\(roomNumber) 房已有历史或在住订单，禁止删除以保护账务和入住记录"
+        case .roomAssignedToActiveBooking(let roomNumber):
+            return "\(roomNumber) 房仍有关联的 OTA 订单，禁止删除"
+        }
+    }
+}
+
 // MARK: - CloudKit 数据服务（CloudKit 不可用时自动降级为本地存储）
 @MainActor
 final class CloudKitService: ObservableObject {
@@ -19,6 +39,10 @@ final class CloudKitService: ObservableObject {
     /// 是否使用本地存储模式（默认 true，CloudKit 确认可用后才切换为 false）
     @Published private(set) var isLocalMode = true
     @Published private(set) var dataProtectionIssue: String?
+
+    var isReadOnlyMode: Bool {
+        isLocalMode && !Self.isRunningTests
+    }
 
     /// 重试定时器
     private var retryTask: Task<Void, Never>?
@@ -107,6 +131,39 @@ final class CloudKitService: ObservableObject {
 
     private func clearPendingLocalSync() {
         hasPendingLocalSync = false
+    }
+
+    private func ensureMutationAllowed() throws {
+        guard !isReadOnlyMode else {
+            throw CloudKitMutationError.readOnlyProtection
+        }
+    }
+
+    private func validateRoomDeletion(id: String) async throws {
+        let room: Room?
+        let reservations: [Reservation]
+
+        if isLocalMode {
+            room = local.fetchAllRooms().first(where: { $0.id == id })
+            reservations = local.fetchAllReservations()
+        } else {
+            let rooms = try await fetchAllRoomModels()
+            room = rooms.first(where: { $0.id == id })
+            reservations = try await fetchAllReservationModels()
+        }
+
+        guard let room else { return }
+        guard room.status == .vacant else {
+            throw CloudKitMutationError.roomNotVacant(roomNumber: room.roomNumber, status: room.status.displayName)
+        }
+        guard !reservations.contains(where: { $0.roomID == id }) else {
+            throw CloudKitMutationError.roomHasReservations(roomNumber: room.roomNumber)
+        }
+        guard !OTABookingService.shared.bookings.contains(where: {
+            $0.assignedRoomID == id && $0.status != .cancelled && $0.status != .noShow
+        }) else {
+            throw CloudKitMutationError.roomAssignedToActiveBooking(roomNumber: room.roomNumber)
+        }
     }
 
     /// 将本地存储中的数据批量同步到 CloudKit
@@ -209,6 +266,7 @@ final class CloudKitService: ObservableObject {
 
     func saveRoom(_ room: Room) async throws {
         if isLocalMode {
+            try ensureMutationAllowed()
             local.saveRoom(room)
             markPendingLocalSync()
             return
@@ -218,6 +276,7 @@ final class CloudKitService: ObservableObject {
             local.mirrorRoom(Room(from: savedRecord))
         } catch {
             fallbackToLocal(error)
+            try ensureMutationAllowed()
             local.saveRoom(room)
             markPendingLocalSync()
         }
@@ -225,6 +284,7 @@ final class CloudKitService: ObservableObject {
 
     func saveRooms(_ rooms: [Room]) async throws {
         if isLocalMode {
+            try ensureMutationAllowed()
             local.saveRooms(rooms)
             markPendingLocalSync()
             return
@@ -234,6 +294,7 @@ final class CloudKitService: ObservableObject {
             local.mirrorRooms(rooms)
         } catch {
             fallbackToLocal(error)
+            try ensureMutationAllowed()
             local.saveRooms(rooms)
             markPendingLocalSync()
         }
@@ -241,6 +302,7 @@ final class CloudKitService: ObservableObject {
 
     func updateRoomStatus(roomID: String, status: RoomStatus) async throws {
         if isLocalMode {
+            try ensureMutationAllowed()
             local.updateRoomStatus(roomID: roomID, status: status)
             markPendingLocalSync()
             return
@@ -256,6 +318,7 @@ final class CloudKitService: ObservableObject {
             local.mirrorRoom(Room(from: savedRecord))
         } catch {
             fallbackToLocal(error)
+            try ensureMutationAllowed()
             local.updateRoomStatus(roomID: roomID, status: status)
             markPendingLocalSync()
         }
@@ -263,15 +326,20 @@ final class CloudKitService: ObservableObject {
 
     func deleteRoom(id: String) async throws {
         if isLocalMode {
+            try ensureMutationAllowed()
+            try await validateRoomDeletion(id: id)
             local.deleteRoom(id: id)
             markPendingLocalSync()
             return
         }
         do {
+            try await validateRoomDeletion(id: id)
             try await db.deleteRecord(withID: CKRecord.ID(recordName: id))
             local.mirrorDeleteRoom(id: id)
         } catch {
             fallbackToLocal(error)
+            try ensureMutationAllowed()
+            try await validateRoomDeletion(id: id)
             local.deleteRoom(id: id)
             markPendingLocalSync()
         }
@@ -282,6 +350,7 @@ final class CloudKitService: ObservableObject {
     func saveGuest(_ guest: Guest) async throws {
         _ = try guest.toRecord()
         if isLocalMode {
+            try ensureMutationAllowed()
             local.saveGuest(guest)
             markPendingLocalSync()
             return
@@ -292,6 +361,7 @@ final class CloudKitService: ObservableObject {
             local.mirrorGuest(try Guest(from: savedRecord))
         } catch {
             guard fallbackToLocal(error) else { throw error }
+            try ensureMutationAllowed()
             local.saveGuest(guest)
             markPendingLocalSync()
         }
@@ -299,6 +369,7 @@ final class CloudKitService: ObservableObject {
 
     func deleteGuest(id: String) async throws {
         if isLocalMode {
+            try ensureMutationAllowed()
             local.deleteGuest(id: id)
             markPendingLocalSync()
             return
@@ -308,6 +379,7 @@ final class CloudKitService: ObservableObject {
             local.mirrorDeleteGuest(id: id)
         } catch {
             fallbackToLocal(error)
+            try ensureMutationAllowed()
             local.deleteGuest(id: id)
             markPendingLocalSync()
         }
@@ -335,6 +407,7 @@ final class CloudKitService: ObservableObject {
 
     func saveReservation(_ reservation: Reservation) async throws {
         if isLocalMode {
+            try ensureMutationAllowed()
             local.saveReservation(reservation)
             markPendingLocalSync()
             return
@@ -344,6 +417,7 @@ final class CloudKitService: ObservableObject {
             local.mirrorReservation(Reservation(from: savedRecord))
         } catch {
             fallbackToLocal(error)
+            try ensureMutationAllowed()
             local.saveReservation(reservation)
             markPendingLocalSync()
         }
@@ -351,6 +425,7 @@ final class CloudKitService: ObservableObject {
 
     func deleteReservation(id: String) async throws {
         if isLocalMode {
+            try ensureMutationAllowed()
             local.deleteReservation(id: id)
             markPendingLocalSync()
             return
@@ -360,6 +435,7 @@ final class CloudKitService: ObservableObject {
             local.mirrorDeleteReservation(id: id)
         } catch {
             fallbackToLocal(error)
+            try ensureMutationAllowed()
             local.deleteReservation(id: id)
             markPendingLocalSync()
         }
@@ -367,6 +443,7 @@ final class CloudKitService: ObservableObject {
 
     func deleteDeposit(id: String) async throws {
         if isLocalMode {
+            try ensureMutationAllowed()
             local.deleteDeposit(id: id)
             markPendingLocalSync()
             return
@@ -376,6 +453,7 @@ final class CloudKitService: ObservableObject {
             local.mirrorDeleteDeposit(id: id)
         } catch {
             fallbackToLocal(error)
+            try ensureMutationAllowed()
             local.deleteDeposit(id: id)
             markPendingLocalSync()
         }
@@ -416,6 +494,7 @@ final class CloudKitService: ObservableObject {
 
     func checkOut(reservationID: String) async throws {
         if isLocalMode {
+            try ensureMutationAllowed()
             local.checkOut(reservationID: reservationID)
             markPendingLocalSync()
             return
@@ -433,8 +512,27 @@ final class CloudKitService: ObservableObject {
             local.mirrorReservation(Reservation(from: savedRecord))
         } catch {
             fallbackToLocal(error)
+            try ensureMutationAllowed()
             local.checkOut(reservationID: reservationID)
             markPendingLocalSync()
+        }
+    }
+
+    func restoreActiveReservation(reservationID: String) async throws {
+        if isLocalMode {
+            local.restoreActiveReservation(id: reservationID)
+            return
+        }
+        do {
+            let recordID = CKRecord.ID(recordName: reservationID)
+            guard let record = try await fetchRecordIfExists(recordID) else { return }
+            record["isActive"] = 1 as CKRecordValue
+            record["actualCheckOut"] = nil
+            let savedRecord = try await db.save(record)
+            local.mirrorReservation(Reservation(from: savedRecord))
+        } catch {
+            fallbackToLocal(error)
+            local.restoreActiveReservation(id: reservationID)
         }
     }
 
@@ -460,6 +558,7 @@ final class CloudKitService: ObservableObject {
 
     func saveDepositRecord(_ deposit: DepositRecord) async throws {
         if isLocalMode {
+            try ensureMutationAllowed()
             local.saveDepositRecord(deposit)
             markPendingLocalSync()
             return
@@ -469,6 +568,7 @@ final class CloudKitService: ObservableObject {
             local.mirrorDeposit(DepositRecord(from: savedRecord))
         } catch {
             fallbackToLocal(error)
+            try ensureMutationAllowed()
             local.saveDepositRecord(deposit)
             markPendingLocalSync()
         }
@@ -624,6 +724,7 @@ final class CloudKitService: ObservableObject {
 
     func deleteAllRooms() async throws {
         if isLocalMode {
+            try ensureMutationAllowed()
             local.deleteAllRooms()
             markPendingLocalSync()
             return
@@ -635,6 +736,7 @@ final class CloudKitService: ObservableObject {
             local.replaceRooms([])
         } catch {
             fallbackToLocal(error)
+            try ensureMutationAllowed()
             local.deleteAllRooms()
             markPendingLocalSync()
         }

@@ -5,7 +5,7 @@ enum ReceiptImageService {
     private static var baseDir: URL {
         let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let dir = docs.appendingPathComponent("HotelLocalData/receipts")
-        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        SecureStorageHelper.ensureDirectory(at: dir, excludeFromBackup: true)
         return dir
     }
 
@@ -14,7 +14,7 @@ enum ReceiptImageService {
         guard let data = image.jpegData(compressionQuality: 0.7) else { return false }
         let url = baseDir.appendingPathComponent("\(depositID).jpg")
         do {
-            try data.write(to: url)
+            try SecureStorageHelper.write(data, to: url, excludeFromBackup: true)
             return true
         } catch {
             print("保存小票照片失败: \(error)")

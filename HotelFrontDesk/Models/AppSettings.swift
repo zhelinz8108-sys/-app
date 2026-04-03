@@ -6,7 +6,6 @@ class AppSettings: ObservableObject {
     static let shared = AppSettings()
 
     private static let keychainKey = "managerPasswordHash"
-    private static let defaultPassword = "8888"
     private static let migrationKey = "passwordMigratedToKeychain"
 
     /// 是否已解锁管理员模式（不再持久化到 UserDefaults，仅从登录状态派生）
@@ -41,10 +40,6 @@ class AppSettings: ObservableObject {
             KeychainHelper.save(key: Self.keychainKey, value: hash)
             // 删除 UserDefaults 中的明文密码
             UserDefaults.standard.removeObject(forKey: "managerPassword")
-        } else {
-            // 没有旧密码，用默认密码初始化
-            let hash = KeychainHelper.hashPassword(Self.defaultPassword)
-            KeychainHelper.save(key: Self.keychainKey, value: hash)
         }
 
         UserDefaults.standard.set(true, forKey: Self.migrationKey)

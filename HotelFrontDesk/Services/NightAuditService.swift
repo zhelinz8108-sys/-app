@@ -49,7 +49,7 @@ final class NightAuditService: ObservableObject {
     private init() {
         let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
         let dir = docs.appendingPathComponent("HotelLocalData")
-        try? fileManager.createDirectory(at: dir, withIntermediateDirectories: true)
+        SecureStorageHelper.ensureDirectory(at: dir, excludeFromBackup: true)
         filePath = dir.appendingPathComponent("extend_requests.json")
         loadRequests()
     }
@@ -180,7 +180,7 @@ final class NightAuditService: ObservableObject {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         guard let data = try? encoder.encode(extendRequests) else { return }
-        try? data.write(to: filePath, options: .atomic)
+        try? SecureStorageHelper.write(data, to: filePath, excludeFromBackup: true)
     }
 
     private func loadRequests() {

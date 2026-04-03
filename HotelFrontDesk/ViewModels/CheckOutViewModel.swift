@@ -55,9 +55,8 @@ final class CheckOutViewModel: ObservableObject {
     func performRefund() async {
         guard canRefund, let res = reservation else { return }
         isSubmitting = true
+        errorMessage = nil
         do {
-            // 先记录退前余额，再 append 到 records
-            let balanceBefore = depositSummary.balance
             let deposit = DepositRecord(
                 id: UUID().uuidString,
                 reservationID: res.id,
@@ -65,6 +64,7 @@ final class CheckOutViewModel: ObservableObject {
                 amount: refundValue,
                 paymentMethod: refundPaymentMethod,
                 timestamp: Date(),
+                operatorName: StaffService.shared.currentStaff?.name ?? "未知",
                 notes: refundNotes.isEmpty ? nil : refundNotes
             )
             try await service.saveDepositRecord(deposit)
@@ -75,7 +75,7 @@ final class CheckOutViewModel: ObservableObject {
             logService.log(
                 type: .depositRefund,
                 summary: "\(roomNum)房 退还押金 ¥\(Int(refundValue))（\(refundPaymentMethod.rawValue)）",
-                detail: "客人: \(guestName) | 金额: ¥\(Int(refundValue)) | 方式: \(refundPaymentMethod.rawValue) | 退后余额: ¥\(Int(balanceBefore - refundValue))\(refundNotes.isEmpty ? "" : " | 备注: \(refundNotes)")",
+                detail: "客人: \(guestName) | 金额: ¥\(Int(refundValue)) | 方式: \(refundPaymentMethod.rawValue) | 退后余额: ¥\(Int(depositSummary.balance))",
                 roomNumber: roomNum
             )
 
@@ -93,9 +93,11 @@ final class CheckOutViewModel: ObservableObject {
         isSubmitting = true
         errorMessage = nil
 
+        var didCheckOutReservation = false
         do {
             // 1. 关闭入住记录
             try await service.checkOut(reservationID: res.id)
+            didCheckOutReservation = true
             // 2. 房间状态改为脏房
             try await service.updateRoomStatus(roomID: roomID, status: .cleaning)
 
@@ -114,6 +116,9 @@ final class CheckOutViewModel: ObservableObject {
 
             checkOutSuccess = true
         } catch {
+            if didCheckOutReservation {
+                try? await service.restoreActiveReservation(reservationID: res.id)
+            }
             errorMessage = "退房失败: \(ErrorHelper.userMessage(error))"
         }
         isSubmitting = false

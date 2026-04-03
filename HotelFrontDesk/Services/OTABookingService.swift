@@ -13,7 +13,7 @@ final class OTABookingService: ObservableObject {
     private init() {
         let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
         let dir = docs.appendingPathComponent("HotelLocalData")
-        try? fileManager.createDirectory(at: dir, withIntermediateDirectories: true)
+        SecureStorageHelper.ensureDirectory(at: dir, excludeFromBackup: true)
         filePath = dir.appendingPathComponent("ota_bookings.json")
         load()
     }
@@ -101,7 +101,7 @@ final class OTABookingService: ObservableObject {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         guard let data = try? encoder.encode(bookings) else { return }
-        try? data.write(to: filePath, options: .atomic)
+        try? SecureStorageHelper.write(data, to: filePath, excludeFromBackup: true)
         BackupService.shared.markDirty()
     }
 

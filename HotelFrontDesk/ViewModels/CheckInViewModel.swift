@@ -21,6 +21,7 @@ final class CheckInViewModel: ObservableObject {
     @Published var idNumber = ""
     @Published var phone = ""
     @Published var guestNotes = ""
+    @Published var guestEmail = ""
     @Published var numberOfGuests = 1
 
     // 房间选择
@@ -49,6 +50,9 @@ final class CheckInViewModel: ObservableObject {
     @Published var checkInSuccess = false
     @Published var receiptImage: UIImage?  // POS小票照片
     var lastDepositID: String?             // 最近创建的押金ID（用于保存小票）
+
+    /// 房间锁定中（异步加锁期间为 true）
+    @Published var isLocking = false
 
     private let service = CloudKitService.shared
     private let logService = OperationLogService.shared
@@ -93,9 +97,9 @@ final class CheckInViewModel: ObservableObject {
 
     // MARK: - 选择房间时加锁
 
-    /// 尝试选择房间（会尝试加锁）
-    func selectRoom(_ room: Room) -> Bool {
-        // 检查是否被他人锁定
+    /// 尝试选择房间（会尝试加锁，异步操作）
+    func selectRoom(_ room: Room) async -> Bool {
+        // 先同步检查是否被他人锁定（快速排除）
         if lockService.isLockedByOther(roomID: room.id) {
             let lockInfo = lockService.lockInfo(roomID: room.id)
             errorMessage = "该房间正在被 \(lockInfo?.staffName ?? "其他人") 办理入住，请稍候"
@@ -105,15 +109,19 @@ final class CheckInViewModel: ObservableObject {
         if let prev = selectedRoom, prev.id != room.id {
             lockService.unlock(roomID: prev.id)
         }
-        // 加锁
-        let locked = lockService.tryLock(roomID: room.id)
+        // 异步加锁（含 CloudKit 远端检查）
+        isLocking = true
+        let locked = await lockService.tryLock(roomID: room.id)
+        isLocking = false
+
         if locked {
             selectedRoom = room
             roomPrice = String(Int(room.pricePerNight))
             errorMessage = nil
             return true
         } else {
-            errorMessage = "房间锁定失败，请重试"
+            let lockInfo = lockService.lockInfo(roomID: room.id)
+            errorMessage = "该房间正在被 \(lockInfo?.staffName ?? "其他人") 办理入住，请稍候"
             return false
         }
     }
@@ -163,12 +171,14 @@ final class CheckInViewModel: ObservableObject {
             let trimmedIDNumber = idNumber.trimmingCharacters(in: .whitespaces)
             let trimmedPhone = phone.trimmingCharacters(in: .whitespaces)
             let guestID = UUID().uuidString
+            let trimmedEmail = guestEmail.trimmingCharacters(in: .whitespaces)
             let guest = Guest(
                 id: guestID,
                 name: trimmedGuestName,
                 idType: idType,
                 idNumber: trimmedIDNumber,
                 phone: trimmedPhone,
+                email: trimmedEmail.isEmpty ? nil : trimmedEmail,
                 notes: guestNotes.isEmpty ? nil : guestNotes
             )
             try await service.saveGuest(guest)
@@ -290,6 +300,7 @@ final class CheckInViewModel: ObservableObject {
         idNumber = ""
         phone = ""
         guestNotes = ""
+        guestEmail = ""
         numberOfGuests = 1
         isHourlyRoom = false
         hourlyDuration = 3
@@ -300,6 +311,7 @@ final class CheckInViewModel: ObservableObject {
         depositAmount = ""
         depositPaymentMethod = .cash
         isSubmitting = false
+        isLocking = false
         errorMessage = nil
         checkInSuccess = false
     }

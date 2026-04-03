@@ -17,6 +17,7 @@ struct Guest: Identifiable {
     var idType: IDType
     var idNumber: String
     var phone: String
+    var email: String?
     var notes: String?
 }
 
@@ -30,6 +31,7 @@ extension Guest {
         self.idType = IDType(rawValue: record["idType"] as? String ?? "") ?? .idCard
         self.idNumber = try EncryptionHelper.decrypt(record["idNumber"] as? String ?? "")
         self.phone = try EncryptionHelper.decrypt(record["phone"] as? String ?? "")
+        self.email = record["email"] as? String
         self.notes = record["notes"] as? String
     }
 
@@ -39,6 +41,7 @@ extension Guest {
         record["idType"] = idType.rawValue as CKRecordValue
         record["idNumber"] = try EncryptionHelper.encrypt(idNumber) as CKRecordValue
         record["phone"] = try EncryptionHelper.encrypt(phone) as CKRecordValue
+        record["email"] = email as CKRecordValue?
         record["notes"] = notes as CKRecordValue?
         return record
     }
