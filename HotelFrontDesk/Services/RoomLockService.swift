@@ -67,7 +67,9 @@ final class RoomLockService: ObservableObject {
     }
 
     private init() {
-        let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        guard let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            fatalError("无法访问 Documents 目录")
+        }
         let dir = docs.appendingPathComponent("HotelLocalData")
         SecureStorageHelper.ensureDirectory(at: dir, excludeFromBackup: true)
         filePath = dir.appendingPathComponent("room_locks.json")

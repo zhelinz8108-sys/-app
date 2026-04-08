@@ -40,7 +40,12 @@ enum EncryptionHelper {
         case encrypted(String)
     }
 
-    private static var cachedKey: SymmetricKey?
+    private static let keyLock = NSLock()
+    private static var _cachedKey: SymmetricKey?
+    private static var cachedKey: SymmetricKey? {
+        get { keyLock.lock(); defer { keyLock.unlock() }; return _cachedKey }
+        set { keyLock.lock(); defer { keyLock.unlock() }; _cachedKey = newValue }
+    }
     private static let keyTag = "hotel.encryption.key"
     private static let keyInitializedTag = "hotel.encryption.key.initialized"
     private static let minimumCiphertextBytes = 29

@@ -15,7 +15,9 @@ final class LocalStorageService {
     private var deposits: [DepositRecord] = []
 
     private init() {
-        let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        guard let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            fatalError("无法访问 Documents 目录")
+        }
         baseDir = docs.appendingPathComponent("HotelLocalData")
         SecureStorageHelper.ensureDirectory(at: baseDir, excludeFromBackup: true)
         loadAll()

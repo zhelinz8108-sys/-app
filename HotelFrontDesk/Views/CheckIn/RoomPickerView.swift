@@ -14,7 +14,7 @@ struct RoomPickerView: View {
     // 按户型筛选
     private var filteredRooms: [Room] {
         let rooms = selectedType == nil ? vacantRooms : vacantRooms.filter { $0.roomType == selectedType }
-        return rooms.sorted { $0.roomNumber > $1.roomNumber }
+        return rooms.sorted { (Int($0.roomNumber) ?? 0) > (Int($1.roomNumber) ?? 0) }
     }
 
     // 按楼层分组

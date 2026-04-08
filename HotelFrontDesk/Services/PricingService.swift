@@ -16,7 +16,9 @@ final class PricingService: ObservableObject {
     static let weekendDays: Set<Int> = [6, 7] // 周五、周六入住算周末
 
     private init() {
-        let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        guard let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            fatalError("无法访问 Documents 目录")
+        }
         let dir = docs.appendingPathComponent("HotelLocalData")
         SecureStorageHelper.ensureDirectory(at: dir, excludeFromBackup: true)
         filePath = dir.appendingPathComponent("special_dates.json")

@@ -87,7 +87,7 @@ extension DepositRecord {
 struct DepositSummary {
     let totalCollected: Double
     let totalRefunded: Double
-    var balance: Double { totalCollected - totalRefunded }
+    var balance: Double { max(0, totalCollected - totalRefunded) }
 
     init(records: [DepositRecord]) {
         self.totalCollected = records

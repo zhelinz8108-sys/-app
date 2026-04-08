@@ -103,7 +103,6 @@ struct OTABooking: Identifiable, Codable {
         notes: String? = nil,
         createdBy: String = ""
     ) {
-        precondition(nights >= 1, "OTABooking nights must be >= 1, got \(nights)")
         self.id = id
         self.platform = platform
         self.customPlatformName = customPlatformName?

@@ -215,7 +215,9 @@ struct NightAuditView: View {
                             Button {
                                 approvingRequestID = request.id
                                 Task {
-                                    await auditService.approveExtend(requestID: request.id)
+                                    if let error = await auditService.approveExtend(requestID: request.id) {
+                                        errorMessage = error
+                                    }
                                     approvingRequestID = nil
                                 }
                             } label: {

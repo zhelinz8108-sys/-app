@@ -51,7 +51,7 @@ extension Reservation {
 // MARK: - 计算属性
 extension Reservation {
     var nightsStayed: Int {
-        let endDate = actualCheckOut ?? Date()
+        let endDate = actualCheckOut ?? expectedCheckOut
         let components = Calendar.current.dateComponents([.day], from: checkInDate, to: endDate)
         let days = components.day ?? 1
         if days < 0 {

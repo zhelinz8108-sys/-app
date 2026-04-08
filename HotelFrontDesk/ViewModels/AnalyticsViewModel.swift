@@ -153,8 +153,9 @@ final class AnalyticsViewModel: ObservableObject {
         monthlyRevenue - monthlyCost
     }
 
-    /// 上月利润
+    /// 上月利润（注意：使用当月成本作为近似值，因为没有历史成本数据）
     var prevMonthProfit: Double {
+        // TODO: 如果有历史成本数据，应使用上月实际成本
         prevMonthRevenue - monthlyCost
     }
 

@@ -3,7 +3,9 @@ import UIKit
 /// 押金小票照片存储服务
 enum ReceiptImageService {
     private static var baseDir: URL {
-        let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        guard let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            fatalError("无法访问 Documents 目录")
+        }
         let dir = docs.appendingPathComponent("HotelLocalData/receipts")
         SecureStorageHelper.ensureDirectory(at: dir, excludeFromBackup: true)
         return dir

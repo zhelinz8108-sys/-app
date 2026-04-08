@@ -47,7 +47,9 @@ final class NightAuditService: ObservableObject {
     private let filePath: URL
 
     private init() {
-        let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        guard let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            fatalError("无法访问 Documents 目录")
+        }
         let dir = docs.appendingPathComponent("HotelLocalData")
         SecureStorageHelper.ensureDirectory(at: dir, excludeFromBackup: true)
         filePath = dir.appendingPathComponent("extend_requests.json")
@@ -62,7 +64,9 @@ final class NightAuditService: ObservableObject {
         let cal = Calendar.current
         let today = Date()
         let startOfDay = cal.startOfDay(for: today)
-        let endOfDay = cal.date(byAdding: .day, value: 1, to: startOfDay)!
+        guard let endOfDay = cal.date(byAdding: .day, value: 1, to: startOfDay) else {
+            throw NSError(domain: "NightAudit", code: -1, userInfo: [NSLocalizedDescriptionKey: "日期计算失败"])
+        }
 
         let occupied = rooms.filter { $0.status == .occupied }.count
         let vacant = rooms.filter { $0.status == .vacant }.count
@@ -130,21 +134,34 @@ final class NightAuditService: ObservableObject {
     }
 
     /// 管理员审批延住
-    func approveExtend(requestID: String) async {
-        guard let idx = extendRequests.firstIndex(where: { $0.id == requestID }) else { return }
-        extendRequests[idx].status = .approved
+    func approveExtend(requestID: String) async -> String? {
+        guard let idx = extendRequests.firstIndex(where: { $0.id == requestID }) else { return "未找到该申请" }
 
         let request = extendRequests[idx]
-        // 更新预订的退房日期（通过 CloudKitService 保持一致性）
+        // 检查延住期间是否有冲突预订
         do {
             let allRes = try await service.fetchAllReservations()
+            let conflicting = allRes.filter { r in
+                r.id != request.reservationID
+                && r.roomID == request.roomID
+                && r.checkInDate < request.requestedCheckOut
+                && (r.actualCheckOut ?? r.expectedCheckOut) > request.originalCheckOut
+            }
+            if !conflicting.isEmpty {
+                return "延住期间该房间已有其他预订，无法批准"
+            }
+
+            // 更新预订的退房日期
             if var res = allRes.first(where: { $0.id == request.reservationID }) {
                 res.expectedCheckOut = request.requestedCheckOut
                 try await service.saveReservation(res)
             }
         } catch {
             print("延住审批：更新预订失败 \(error)")
+            return "更新预订失败: \(error.localizedDescription)"
         }
+
+        extendRequests[idx].status = .approved
 
         persist()
 
@@ -154,6 +171,7 @@ final class NightAuditService: ObservableObject {
             detail: "客人: \(request.guestName) | 延至: \(formatDate(request.requestedCheckOut)) | 审批人: \(StaffService.shared.currentName)",
             roomNumber: request.roomNumber
         )
+        return nil
     }
 
     func rejectExtend(requestID: String) {

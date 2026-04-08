@@ -64,13 +64,13 @@ final class BackupService: ObservableObject {
 
     /// 本地数据目录
     private var localDataDir: URL {
-        let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first ?? URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent("Documents")
         return docs.appendingPathComponent("HotelLocalData")
     }
 
     /// 本地备份存档目录
     private var localBackupArchiveDir: URL {
-        let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first ?? URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent("Documents")
         return docs.appendingPathComponent("HotelBackupArchive")
     }
 

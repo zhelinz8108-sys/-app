@@ -5,7 +5,8 @@ import Foundation
 final class StaffService: ObservableObject {
     static let shared = StaffService()
     private static let bootstrapUsername = "admin"
-    private static let legacyBootstrapPassword = "8888"
+    // 默认密码的哈希，用于检测是否仍在使用默认密码（不存储明文）
+    private static let legacyBootstrapPasswordHash = KeychainHelper.hashPassword("8888")
 
     /// 当前登录的员工
     @Published var currentStaff: Staff?
@@ -46,7 +47,9 @@ final class StaffService: ObservableObject {
     }
 
     private init() {
-        let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        guard let docs = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            fatalError("无法访问 Documents 目录")
+        }
         let dir = docs.appendingPathComponent("HotelLocalData")
         SecureStorageHelper.ensureDirectory(at: dir, excludeFromBackup: true)
         filePath = dir.appendingPathComponent("staff.json")
@@ -226,8 +229,8 @@ final class StaffService: ObservableObject {
         guard trimmed.count >= 8 else {
             return "密码至少需要 8 位"
         }
-        guard trimmed != Self.legacyBootstrapPassword else {
-            return "不能继续使用默认密码 8888"
+        guard KeychainHelper.hashPassword(trimmed) != Self.legacyBootstrapPasswordHash else {
+            return "不能继续使用默认密码"
         }
 
         let hasLetter = trimmed.range(of: "[A-Za-z]", options: .regularExpression) != nil
@@ -356,7 +359,7 @@ final class StaffService: ObservableObject {
     }
 
     private func usesLegacyBootstrapPassword(_ staff: Staff) -> Bool {
-        staff.verifyPassword(Self.legacyBootstrapPassword)
+        staff.passwordHash == Self.legacyBootstrapPasswordHash
     }
 
     private func readStoredPasswordHash(for staffID: String) -> String {

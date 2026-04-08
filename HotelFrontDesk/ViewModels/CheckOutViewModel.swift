@@ -118,6 +118,8 @@ final class CheckOutViewModel: ObservableObject {
         } catch {
             if didCheckOutReservation {
                 try? await service.restoreActiveReservation(reservationID: res.id)
+                // 恢复房间状态为入住中
+                try? await service.updateRoomStatus(roomID: roomID, status: .occupied)
             }
             errorMessage = "退房失败: \(ErrorHelper.userMessage(error))"
         }

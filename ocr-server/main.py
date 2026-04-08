@@ -3,10 +3,11 @@
 提供身份证/护照识别 API，供 iPad App 调用
 """
 
+import os
 import re
 import io
 import logging
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, Header
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from paddleocr import PaddleOCR
@@ -15,14 +16,28 @@ from PIL import Image
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# 安全配置
+MAX_UPLOAD_SIZE = 10 * 1024 * 1024  # 10MB
+MAX_IMAGE_PIXELS = 4096 * 4096  # 16M pixels
+Image.MAX_IMAGE_PIXELS = MAX_IMAGE_PIXELS
+API_KEY = os.environ.get("OCR_API_KEY", "")
+ALLOWED_ORIGINS = os.environ.get("OCR_ALLOWED_ORIGINS", "").split(",") if os.environ.get("OCR_ALLOWED_ORIGINS") else []
+
 app = FastAPI(title="酒店前台 OCR 服务", version="1.0.0")
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+if ALLOWED_ORIGINS:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=ALLOWED_ORIGINS,
+        allow_methods=["POST", "GET"],
+        allow_headers=["Authorization", "Content-Type"],
+    )
+
+
+async def verify_api_key(authorization: str = Header(default="")):
+    """API Key 认证"""
+    if API_KEY and authorization != f"Bearer {API_KEY}":
+        raise HTTPException(status_code=401, detail="未授权访问")
 
 # 初始化 PaddleOCR（启动时加载模型，后续请求复用）
 ocr_engine = PaddleOCR(use_angle_cls=True, lang="ch", show_log=False)
@@ -241,7 +256,7 @@ def detect_doc_type(texts: list[str]) -> str:
     return "unknown"
 
 
-@app.post("/ocr/id-card", response_model=OCRResponse)
+@app.post("/ocr/id-card", response_model=OCRResponse, dependencies=[Depends(verify_api_key)])
 async def scan_id_card(file: UploadFile = File(...)):
     """扫描身份证/护照，返回结构化信息"""
     if not file.content_type or not file.content_type.startswith("image/"):
@@ -249,6 +264,8 @@ async def scan_id_card(file: UploadFile = File(...)):
 
     try:
         contents = await file.read()
+        if len(contents) > MAX_UPLOAD_SIZE:
+            raise HTTPException(status_code=413, detail=f"文件过大，最大允许 {MAX_UPLOAD_SIZE // 1024 // 1024}MB")
         image = Image.open(io.BytesIO(contents))
 
         # PaddleOCR 识别（传文件路径或numpy array）
@@ -267,7 +284,7 @@ async def scan_id_card(file: UploadFile = File(...)):
             texts.append(text)
             confidences.append(conf)
 
-        logger.info(f"OCR识别到 {len(texts)} 行文字: {texts}")
+        logger.info(f"OCR识别到 {len(texts)} 行文字")
 
         # 判断证件类型
         doc_type = detect_doc_type(texts)
@@ -306,7 +323,7 @@ async def scan_id_card(file: UploadFile = File(...)):
         return OCRResponse(success=False, error=f"识别失败: {str(e)}")
 
 
-@app.post("/ocr/receipt", response_model=ReceiptOCRResponse)
+@app.post("/ocr/receipt", response_model=ReceiptOCRResponse, dependencies=[Depends(verify_api_key)])
 async def scan_receipt(file: UploadFile = File(...)):
     """通用OCR识别，返回所有检测到的文字行及位置和置信度"""
     if not file.content_type or not file.content_type.startswith("image/"):
@@ -314,6 +331,8 @@ async def scan_receipt(file: UploadFile = File(...)):
 
     try:
         contents = await file.read()
+        if len(contents) > MAX_UPLOAD_SIZE:
+            raise HTTPException(status_code=413, detail=f"文件过大，最大允许 {MAX_UPLOAD_SIZE // 1024 // 1024}MB")
         image = Image.open(io.BytesIO(contents))
 
         import numpy as np

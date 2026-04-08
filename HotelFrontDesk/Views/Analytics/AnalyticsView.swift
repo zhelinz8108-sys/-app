@@ -425,7 +425,7 @@ struct AnalyticsView: View {
     private func compareArrow(_ change: Double?) -> some View {
         Group {
             if let change = change {
-                Image(systemName: change >= 0 ? "arrow.right" : "arrow.right")
+                Image(systemName: change >= 0 ? "arrow.up.right" : "arrow.down.right")
                     .font(.caption)
                     .foregroundStyle(change >= 0 ? .green : .red)
             } else {
