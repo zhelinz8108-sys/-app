@@ -5,8 +5,7 @@ import Foundation
 final class StaffService: ObservableObject {
     static let shared = StaffService()
     private static let bootstrapUsername = "admin"
-    // 默认密码的哈希，用于检测是否仍在使用默认密码（不存储明文）
-    private static let legacyBootstrapPasswordHash = KeychainHelper.hashPassword("8888")
+    private static let legacyBootstrapPassword = "8888"
 
     /// 当前登录的员工
     @Published var currentStaff: Staff?
@@ -43,7 +42,9 @@ final class StaffService: ObservableObject {
         return "检测到当前账号仍在使用默认密码。为了保护前台数据，请先完成改密。"
     }
     var shouldShowBootstrapHint: Bool {
-        requiresInitialManagerSetup
+        requiresInitialManagerSetup || staffList.contains(where: {
+            $0.role == .manager && usesLegacyBootstrapPassword($0)
+        })
     }
 
     private init() {
@@ -229,7 +230,7 @@ final class StaffService: ObservableObject {
         guard trimmed.count >= 8 else {
             return "密码至少需要 8 位"
         }
-        guard KeychainHelper.hashPassword(trimmed) != Self.legacyBootstrapPasswordHash else {
+        guard trimmed != Self.legacyBootstrapPassword else {
             return "不能继续使用默认密码"
         }
 
@@ -359,7 +360,7 @@ final class StaffService: ObservableObject {
     }
 
     private func usesLegacyBootstrapPassword(_ staff: Staff) -> Bool {
-        staff.passwordHash == Self.legacyBootstrapPasswordHash
+        KeychainHelper.verifyPassword(Self.legacyBootstrapPassword, against: staff.passwordHash)
     }
 
     private func readStoredPasswordHash(for staffID: String) -> String {

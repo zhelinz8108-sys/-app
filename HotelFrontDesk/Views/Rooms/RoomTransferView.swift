@@ -255,7 +255,7 @@ struct RoomTransferView: View {
             isSubmitting = false
             onComplete()
         } catch {
-            await rollbackTransfer(
+            let rollbackFailures = await rollbackTransfer(
                 reservation: res,
                 targetRoomID: target.id,
                 originalCurrentRoomStatus: currentRoom.status,
@@ -264,7 +264,15 @@ struct RoomTransferView: View {
                 didUpdateCurrentRoom: didUpdateCurrentRoom,
                 didUpdateTargetRoom: didUpdateTargetRoom
             )
-            errorMessage = "换房失败: \(ErrorHelper.userMessage(error))"
+            errorMessage = makeFailureMessage(error: error, rollbackFailures: rollbackFailures)
+            if !rollbackFailures.isEmpty {
+                logService.log(
+                    type: .roomStatusChange,
+                    summary: "\(currentRoom.roomNumber)房 换房回滚待核对",
+                    detail: "换房失败后自动回滚未完全成功，需人工核对：\(rollbackFailures.joined(separator: "、")) | 原因: \(ErrorHelper.userMessage(error))",
+                    roomNumber: currentRoom.roomNumber
+                )
+            }
             isSubmitting = false
         }
     }
@@ -296,15 +304,37 @@ struct RoomTransferView: View {
         didUpdateReservation: Bool,
         didUpdateCurrentRoom: Bool,
         didUpdateTargetRoom: Bool
-    ) async {
+    ) async -> [String] {
+        var failures: [String] = []
+
         if didUpdateTargetRoom {
-            try? await service.updateRoomStatus(roomID: targetRoomID, status: originalTargetRoomStatus)
+            do {
+                try await service.updateRoomStatus(roomID: targetRoomID, status: originalTargetRoomStatus)
+            } catch {
+                failures.append("目标房态恢复")
+            }
         }
         if didUpdateCurrentRoom {
-            try? await service.updateRoomStatus(roomID: currentRoom.id, status: originalCurrentRoomStatus)
+            do {
+                try await service.updateRoomStatus(roomID: currentRoom.id, status: originalCurrentRoomStatus)
+            } catch {
+                failures.append("原房房态恢复")
+            }
         }
         if didUpdateReservation {
-            try? await service.saveReservation(reservation)
+            do {
+                try await service.saveReservation(reservation)
+            } catch {
+                failures.append("入住记录恢复")
+            }
         }
+
+        return failures
+    }
+
+    private func makeFailureMessage(error: Error, rollbackFailures: [String]) -> String {
+        let base = "换房失败: \(ErrorHelper.userMessage(error))"
+        guard !rollbackFailures.isEmpty else { return base }
+        return "\(base)。系统已尝试回滚，但以下项目仍需人工核对：\(rollbackFailures.joined(separator: "、"))。"
     }
 }

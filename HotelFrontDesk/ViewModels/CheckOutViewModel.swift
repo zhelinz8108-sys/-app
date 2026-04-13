@@ -116,13 +116,49 @@ final class CheckOutViewModel: ObservableObject {
 
             checkOutSuccess = true
         } catch {
+            var rollbackFailures: [String] = []
             if didCheckOutReservation {
-                try? await service.restoreActiveReservation(reservationID: res.id)
-                // 恢复房间状态为入住中
-                try? await service.updateRoomStatus(roomID: roomID, status: .occupied)
+                rollbackFailures = await rollbackCheckOut(reservationID: res.id, roomID: roomID)
             }
-            errorMessage = "退房失败: \(ErrorHelper.userMessage(error))"
+            errorMessage = makeFailureMessage(
+                action: "退房失败",
+                error: error,
+                rollbackFailures: rollbackFailures
+            )
+            if !rollbackFailures.isEmpty {
+                let roomNum = res.room?.roomNumber ?? "未知"
+                logService.log(
+                    type: .roomStatusChange,
+                    summary: "\(roomNum)房 退房回滚待核对",
+                    detail: "办理退房失败后自动回滚未完全成功，需人工核对：\(rollbackFailures.joined(separator: "、")) | 原因: \(ErrorHelper.userMessage(error))",
+                    roomNumber: roomNum
+                )
+            }
         }
         isSubmitting = false
+    }
+
+    private func rollbackCheckOut(reservationID: String, roomID: String) async -> [String] {
+        var failures: [String] = []
+
+        do {
+            try await service.restoreActiveReservation(reservationID: reservationID)
+        } catch {
+            failures.append("入住记录恢复")
+        }
+
+        do {
+            try await service.updateRoomStatus(roomID: roomID, status: .occupied)
+        } catch {
+            failures.append("房态恢复")
+        }
+
+        return failures
+    }
+
+    private func makeFailureMessage(action: String, error: Error, rollbackFailures: [String]) -> String {
+        let base = "\(action): \(ErrorHelper.userMessage(error))"
+        guard !rollbackFailures.isEmpty else { return base }
+        return "\(base)。系统已尝试回滚，但以下项目仍需人工核对：\(rollbackFailures.joined(separator: "、"))。"
     }
 }

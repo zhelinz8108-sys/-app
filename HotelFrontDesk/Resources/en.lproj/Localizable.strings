@@ -110,9 +110,9 @@
 "report.daily" = "Daily Report";
 
 /* Network */
-"network.localMode" = "Read-Only Protection Mode — cloud sync unavailable, writes are blocked to prevent conflicts";
-"network.retrying" = "Retrying";
-"network.writeLocked" = "Writes Locked";
+"network.localMode" = "Offline Mode — cloud sync unavailable, data is being stored locally";
+"network.retrying" = "Will sync automatically when reconnected";
+"network.writeLocked" = "Writes Paused";
 
 /* Login */
 "login.title" = "Staff Login";

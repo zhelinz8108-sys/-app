@@ -10,7 +10,7 @@ enum CloudKitMutationError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .readOnlyProtection:
-            return "云同步当前不可用，系统已进入只读保护模式以防多设备数据冲突。请恢复 iCloud/网络后再继续办理业务。"
+            return "检测到数据保护异常，系统已临时锁定写入。请先完成恢复或确认 iCloud 数据一致后再继续办理业务。"
         case .roomNotVacant(let roomNumber, let status):
             return "\(roomNumber) 房当前状态为\(status)，只能删除空房"
         case .roomHasReservations(let roomNumber):
@@ -41,7 +41,7 @@ final class CloudKitService: ObservableObject {
     @Published private(set) var dataProtectionIssue: String?
 
     var isReadOnlyMode: Bool {
-        isLocalMode && !Self.isRunningTests
+        dataProtectionIssue != nil && !Self.isRunningTests
     }
 
     /// 重试定时器

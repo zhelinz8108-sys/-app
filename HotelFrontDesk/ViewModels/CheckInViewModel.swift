@@ -261,7 +261,7 @@ final class CheckInViewModel: ObservableObject {
             checkInSuccess = true
         } catch {
             // 补偿回滚
-            await rollback(
+            let rollbackFailures = await rollback(
                 guestID: savedGuestID,
                 reservationID: savedReservationID,
                 depositID: savedDepositID,
@@ -269,7 +269,19 @@ final class CheckInViewModel: ObservableObject {
                 originalStatus: room.status
             )
             lockService.unlock(roomID: room.id)
-            errorMessage = "入住办理失败: \(ErrorHelper.userMessage(error))"
+            errorMessage = makeFailureMessage(
+                action: "入住办理失败",
+                error: error,
+                rollbackFailures: rollbackFailures
+            )
+            if !rollbackFailures.isEmpty {
+                logService.log(
+                    type: .roomStatusChange,
+                    summary: "\(room.roomNumber)房 入住回滚待核对",
+                    detail: "办理入住失败后自动回滚未完全成功，需人工核对：\(rollbackFailures.joined(separator: "、")) | 原因: \(ErrorHelper.userMessage(error))",
+                    roomNumber: room.roomNumber
+                )
+            }
         }
 
         isSubmitting = false
@@ -282,11 +294,43 @@ final class CheckInViewModel: ObservableObject {
         depositID: String?,
         roomID: String,
         originalStatus: RoomStatus
-    ) async {
-        if let depositID { try? await service.deleteDeposit(id: depositID) }
-        if let reservationID { try? await service.deleteReservation(id: reservationID) }
-        if let guestID { try? await service.deleteGuest(id: guestID) }
-        try? await service.updateRoomStatus(roomID: roomID, status: originalStatus)
+    ) async -> [String] {
+        var failures: [String] = []
+
+        if let depositID {
+            do {
+                try await service.deleteDeposit(id: depositID)
+            } catch {
+                failures.append("押金记录")
+            }
+        }
+        if let reservationID {
+            do {
+                try await service.deleteReservation(id: reservationID)
+            } catch {
+                failures.append("入住记录")
+            }
+        }
+        if let guestID {
+            do {
+                try await service.deleteGuest(id: guestID)
+            } catch {
+                failures.append("客人档案")
+            }
+        }
+        do {
+            try await service.updateRoomStatus(roomID: roomID, status: originalStatus)
+        } catch {
+            failures.append("房态恢复")
+        }
+
+        return failures
+    }
+
+    private func makeFailureMessage(action: String, error: Error, rollbackFailures: [String]) -> String {
+        let base = "\(action): \(ErrorHelper.userMessage(error))"
+        guard !rollbackFailures.isEmpty else { return base }
+        return "\(base)。系统已尝试回滚，但以下项目仍需人工核对：\(rollbackFailures.joined(separator: "、"))。"
     }
 
     // MARK: - 重置表单

@@ -110,9 +110,9 @@
 "report.daily" = "每日营收报表";
 
 /* Network */
-"network.localMode" = "只读保护模式 — 云同步不可用，已禁止写入以防数据冲突";
-"network.retrying" = "重试中";
-"network.writeLocked" = "写入已锁定";
+"network.localMode" = "离线模式 — 云同步不可用，数据暂存本机";
+"network.retrying" = "恢复后自动同步";
+"network.writeLocked" = "写入已暂停";
 
 /* Login */
 "login.title" = "员工登录";
